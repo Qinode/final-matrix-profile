@@ -4,7 +4,6 @@ from src.util.util import mass
 
 
 class TestMass(object):
-
     def test_mass(self):
         window_size = 10
         time_series_length = 1000
@@ -19,3 +18,18 @@ class TestMass(object):
         mass_dp = mass(query, time_series)
 
         assert np.allclose(distance_profile, mass_dp)
+
+    def test_mass_random(self):
+        window_size = 10
+        time_series_length = 1000
+
+        time_series = np.random.rand(time_series_length)
+        query = np.random.rand(window_size)
+
+        distance_profile = np.zeros((time_series_length - window_size + 1, ))
+        for i in range(time_series_length - window_size + 1):
+            distance_profile[i] = z_norm_euclidean(query, time_series[i:i + window_size])
+
+        mass_dp = mass(query, time_series)
+
+        assert np.allclose(distance_profile, mass_dp, rtol=1e-03)
