@@ -36,7 +36,14 @@ def mass(query, time_series):
 
     assert qt.shape == mean_t.shape == std_t.shape
     temp_term = (qt - m * mean_q * mean_t)/(m *std_q * std_t)
-    d = np.sqrt(2 * m * (np.ones(qt.shape) - np.round(temp_term, decimals=3)))
+    d = np.sqrt(2 * m * (np.ones(qt.shape) - np.around(temp_term, decimals=9)))
     return d
+
+
+def elementwise_min(mp, mpi, dp, idx):
+    stack = np.stack((mp, dp))
+    min_idx = np.where(np.argmin(stack, axis=0) == 1)
+    mpi[min_idx] = idx
+    return np.min(stack, axis=0), mpi
 
 

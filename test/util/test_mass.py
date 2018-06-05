@@ -32,4 +32,4 @@ class TestMass(object):
 
         mass_dp = mass(query, time_series)
 
-        assert np.allclose(distance_profile, mass_dp, rtol=1e-03)
+        assert np.allclose(distance_profile, mass_dp, rtol=1e-04)
