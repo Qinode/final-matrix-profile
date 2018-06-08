@@ -20,6 +20,7 @@ def naive(series1, series2, window, distance=None):
     return np.amin(dm, axis=0).reshape(series1.shape[0] - window + 1, 1), np.argmin(dm, axis=0).reshape(series1.shape[0] - window + 1, 1)
 
 
+# series1 join series2
 def stamp(series1, series2, window_size, self_join, distance=None):
     n_b = series2.shape[0]
     p_ab = np.full((series1.shape[0] - window_size + 1,), np.inf)
@@ -35,3 +36,36 @@ def stamp(series1, series2, window_size, self_join, distance=None):
         p_ab, i_ab = elementwise_min(p_ab, i_ab, dp, i)
 
     return p_ab, i_ab
+
+
+def stampi(series1, series2, new1, new2, p, i, window_size, self_join, distance=None):
+    if series1.shape[0] < window_size or series2.shape[0]:
+        pass
+    else:
+        series2_new = np.append(series2, new2)
+        series1_new = np.append(series1, new1)
+
+        if self_join:
+            query = series2_new[-window_size:]
+            idx = series2.shape[0] + 1 - window_size
+            dp = mass(query, series1)
+
+            left, right = max(0, i - window_size//2), min(i + window_size//2, dp.shape[0])
+            dp[left:right+1] = np.inf
+
+            p, i = elementwise_min(p, i, dp, idx)
+            p_new, i_new = np.min(dp), np.argmin(dp)
+
+            return np.append(p, p_new), np.append(i, i_new)
+        else:
+            query = series2_new[-window_size:]
+            idx = series2.shape[0] + 1 - window_size
+            dp1 = mass(query, series1)
+
+            p, i = elementwise_min(p, i, dp1, idx)
+            last_sequence = series1_new[-window_size:]
+            dp2 = mass(last_sequence, series2_new)
+            p_new, i_new = np.min(dp2), np.argmin(dp2)
+
+            return np.append(p, p_new), np.append(i, i_new)
+
