@@ -1,13 +1,12 @@
 import numpy as np
 
 
-def sliding_dot_product(query, time_series):
-    len_q, len_t = query.shape[0], time_series.shape[0]
+def sliding_dot_product(query, time_series, len_t):
+    len_q = query.shape[0]
 
-    t_a = np.append(time_series, np.zeros((len_t, 1)))
-    r_qa = np.append(query[::-1], np.zeros((2 * len_t - len_q, )))
+    r_qa = np.append(query[::-1], np.zeros((len_t, )))
 
-    return np.fft.irfft(np.fft.rfft(r_qa) * np.fft.rfft(t_a))[len_q-1:len_t]
+    return np.fft.irfft(np.fft.rfft(r_qa) * time_series)[len_q-1:len_t]
 
 
 # compute the mean and standard deviation of all subsequence of a
@@ -40,16 +39,15 @@ def moving_std(time_series, moving_average, windows_size):
     return np.sqrt(sigma2)
 
 
-def mass(query, time_series):
+def mass(query, time_series, len_t, mean_t, std_t):
     m = query.shape[0]
-    qt = sliding_dot_product(query, time_series)
+    qt = sliding_dot_product(query, time_series, len_t)
     mean_q, std_q = np.mean(query), np.std(query)
-    mean_t, std_t = mean_std(m, time_series)  # todo: optimize
 
-    assert qt.shape == mean_t.shape == std_t.shape
-    temp_term = (qt - m * mean_q * mean_t)/(m *std_q * std_t)
-    d = np.sqrt(2 * m * (np.ones(qt.shape) - np.around(temp_term, decimals=9)))
-    return d
+    temp_term = (qt - m * mean_q * mean_t)/(std_q * std_t)
+    # d = np.sqrt(2 * (m * np.ones(temp_term.shape) - np.around(temp_term, decimals=9)))
+    d = 2 * (m * np.ones(temp_term.shape) - temp_term)
+    return np.sqrt(np.abs(d))
 
 
 def elementwise_min(mp, mpi, dp, idx):

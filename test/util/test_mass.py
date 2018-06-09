@@ -1,6 +1,6 @@
 import numpy as np
 from src.distance.z_norm_euclidean import z_norm_euclidean
-from src.util.util import mass
+from src.util.util import mass, moving_average, moving_std
 
 
 class TestMass(object):
@@ -15,9 +15,15 @@ class TestMass(object):
         for i in range(time_series_length - window_size + 1):
             distance_profile[i] = z_norm_euclidean(query, time_series[i:i + window_size])
 
-        mass_dp = mass(query, time_series)
+        ma = moving_average(time_series, window_size)
+        mstd = moving_std(time_series, ma, window_size)
 
-        assert np.allclose(distance_profile, mass_dp)
+        time_series_freq = np.fft.rfft(np.append(time_series, np.zeros(window_size, )))
+        mass_dp = mass(query, time_series_freq, time_series_length, ma, mstd)
+
+        diff = distance_profile - mass_dp
+
+        assert np.allclose(distance_profile, mass_dp, atol=1e-04)
 
     def test_mass_random(self):
         window_size = 10
@@ -30,6 +36,10 @@ class TestMass(object):
         for i in range(time_series_length - window_size + 1):
             distance_profile[i] = z_norm_euclidean(query, time_series[i:i + window_size])
 
-        mass_dp = mass(query, time_series)
+        ma = moving_average(time_series, window_size)
+        mstd = moving_std(time_series, ma, window_size)
 
-        assert np.allclose(distance_profile, mass_dp, rtol=1e-04)
+        time_series_freq = np.fft.rfft(np.append(time_series, np.zeros(window_size, )))
+        mass_dp = mass(query, time_series_freq, time_series_length, ma, mstd)
+
+        assert np.allclose(distance_profile, mass_dp, atol=1e-04)
