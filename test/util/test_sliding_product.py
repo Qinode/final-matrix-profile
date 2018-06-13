@@ -10,7 +10,7 @@ class TestSlidingProduct(object):
         time_series = np.arange(time_series_size)
         query = np.arange(window_size)
 
-        time_series_freq = np.fft.rfft(np.append(time_series, np.zeros((window_size, ))))
+        time_series_freq = np.fft.fft(np.append(time_series, np.zeros((window_size, ))))
         qt = sliding_dot_product(query, time_series_freq, time_series_size)
         for i in range(time_series_size - window_size + 1):
             assert np.allclose(qt[i], query.transpose().dot(time_series[i:i+window_size]))
@@ -23,7 +23,7 @@ class TestSlidingProduct(object):
         time_series = np.random.rand(time_series_size)
         query = np.random.rand(window_size)
 
-        time_series_freq = np.fft.rfft(np.append(time_series, np.zeros((window_size, ))))
+        time_series_freq = np.fft.fft(np.append(time_series, np.zeros((window_size, ))))
         qt = sliding_dot_product(query, time_series_freq, time_series_size)
         for i in range(time_series_size - window_size + 1):
             assert np.allclose(qt[i], query.transpose().dot(time_series[i:i+window_size]))

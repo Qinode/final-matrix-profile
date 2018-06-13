@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def sliding_dot_product(query, time_series, len_t):
+def sliding_dot_product(query, time_series_freq, len_t):
     len_q = query.shape[0]
 
     r_qa = np.append(query[::-1], np.zeros((len_t, )))
 
-    return np.fft.irfft(np.fft.rfft(r_qa) * time_series)[len_q-1:len_t]
+    return np.fft.ifft(np.fft.fft(r_qa) * time_series_freq)[len_q - 1:len_t]
 
 
 # compute the mean and standard deviation of all subsequence of a
@@ -39,21 +39,25 @@ def moving_std(time_series, moving_average, windows_size):
     return np.sqrt(sigma2)
 
 
-def mass(query, time_series, len_t, mean_t, std_t):
+def mass(query, time_series_freq, len_t, mean_t, std_t):
     m = query.shape[0]
-    qt = sliding_dot_product(query, time_series, len_t)
+    qt = sliding_dot_product(query, time_series_freq, len_t)
     mean_q, std_q = np.mean(query), np.std(query)
 
     temp_term = (qt - m * mean_q * mean_t)/(std_q * std_t)
     # d = np.sqrt(2 * (m * np.ones(temp_term.shape) - np.around(temp_term, decimals=9)))
+    # return d
     d = 2 * (m * np.ones(temp_term.shape) - temp_term)
     return np.sqrt(np.abs(d))
 
 
 def elementwise_min(mp, mpi, dp, idx):
-    stack = np.stack((mp, dp))
-    min_idx = np.where(np.argmin(stack, axis=0) == 1)
+    min_idx = dp < mp
+
     mpi[min_idx] = idx
-    return np.min(stack, axis=0), mpi
+    mp[min_idx] = dp[min_idx]
+
+    mp[idx], mpi[idx] = np.min(dp), np.argmin(dp)
+    return mp, mpi
 
 

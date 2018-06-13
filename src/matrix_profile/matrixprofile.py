@@ -31,7 +31,7 @@ def stamp(series1, series2, window_size, self_join, distance=None):
     mean_t = moving_average(series1, window_size)
     std_t = moving_std(series1, mean_t, window_size)
 
-    series1_freq = np.fft.rfft(np.append(series1, np.zeros(window_size, )))
+    series1_freq = np.fft.fft(np.append(series1, np.zeros(window_size, )))
 
     for i in range(n2 - window_size + 1):
         print('{}/{}'.format(i + 1, n2 - window_size + 1))
