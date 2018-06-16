@@ -39,8 +39,8 @@ def stamp(series1, series2, window_size, self_join, distance=None):
 
         if self_join:
             dp = mass(series2[i:i + window_size], series1_freq, series1.shape[0], mean_t, std_t, mean_t[i], std_t[i])
-            left, right = max(0, i - window_size//2), min(i + window_size//2, n2)
-            dp[left:right+1] = np.inf
+            left, right = max(0, i - window_size//2), min((i + window_size//2) + 1, n2)
+            dp[left:right] = np.inf
         else:
             query = series2[i:i + window_size]
             mean_q = np.mean(query)

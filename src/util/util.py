@@ -9,24 +9,6 @@ def sliding_dot_product(query, time_series_freq, len_t):
     return np.fft.ifft(np.fft.fft(r_qa) * time_series_freq)[len_q - 1:len_t]
 
 
-# compute the mean and standard deviation of all subsequence of a
-# time series given a window size m
-# could be optimized according to the paper:
-
-# searching and mining trillions time series subsequences under
-# dynamic time wrapping
-def mean_std(window_size, time_series):
-    len_t = time_series.shape[0]
-    mean, std = np.zeros((len_t - window_size + 1)), np.zeros((len_t - window_size + 1))
-
-    for i in range(len_t - window_size + 1):
-        subsequence = time_series[i: i+window_size]
-        mean[i] = np.mean(subsequence)
-        std[i] = np.std(subsequence)
-
-    return mean, std
-
-
 def moving_average(time_series, window_size):
     cum_sum = np.cumsum(time_series, dtype=float)
     return (cum_sum[window_size-1:] - np.append(np.array([0]), cum_sum[:-window_size])) / window_size
