@@ -16,6 +16,17 @@ class TestMP(object):
         assert np.allclose(mp, mp_test)
         assert np.array_equal(mpi, mpi_test)
 
+    def test_naive_16000(self):
+        path = os.path.abspath(os.path.dirname(__file__))
+
+        data = scipy.io.loadmat(os.path.join(path, 'test_data/penguin_16000'))['penguin_16000']
+        mp_test = scipy.io.loadmat(os.path.join(path, 'test_data/mp_16000.mat'))['matrixProfile_16000']
+        mpi_test = scipy.io.loadmat(os.path.join(path, 'test_data/mpi_16000.mat'))['profileIndex_16000'] - np.ones(mp_test.shape)
+
+        mp, mpi = naive(data, data, 8)
+        assert np.allclose(mp, mp_test)
+        assert np.array_equal(mpi, mpi_test)
+
     def test_stamp(self):
         path = os.path.abspath(os.path.dirname(__file__))
 
@@ -46,9 +57,9 @@ class TestMP(object):
         data = scipy.io.loadmat(os.path.join(path, 'test_data/penguin_40000_70000'))['penguin_40000_70000']
         mp_test = scipy.io.loadmat(os.path.join(path, 'test_data/mp_40000_70000.mat'))['matrixProfile40000_70000']
         mpi_test = scipy.io.loadmat(os.path.join(path, 'test_data/mpi_40000_70000.mat'))['profileIndex40000_70000'] - np.ones(mp_test.shape)
-
+    
         mp, mpi = stamp(data, data, 800, self_join=True)
-
+    
         assert np.array_equal(mpi.reshape(mpi_test.shape), mpi_test)
         assert np.allclose(mp.reshape(mp_test.shape), mp_test, atol=1e-04)
 
@@ -61,8 +72,8 @@ class TestMP(object):
 
         mp, mpi = stamp(data, data, 800, self_join=True)
 
-        scipy.io.savemat(os.path.join(path, 'test_data/py_mp_full.mat'), {'mp': mp})
-        scipy.io.savemat(os.path.join(path, 'test_data/py_mpi_full.mat'), {'mpi': mpi})
+        # scipy.io.savemat(os.path.join(path, 'test_data/py_mp_full.mat'), {'mp': mp})
+        # scipy.io.savemat(os.path.join(path, 'test_data/py_mpi_full.mat'), {'mpi': mpi})
 
         assert np.allclose(np.around(mp.reshape(mp_test.shape), decimals=4), mp_test, atol=1e-04)
         assert np.array_equal(mpi.reshape(mpi_test.shape), mpi_test)

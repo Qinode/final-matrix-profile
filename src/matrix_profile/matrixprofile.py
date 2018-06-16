@@ -24,6 +24,7 @@ def naive(series1, series2, window, distance=None):
 
 # series1 join series2
 def stamp(series1, series2, window_size, self_join, distance=None):
+
     n2 = series2.shape[0]
     p_ab = np.full((series1.shape[0] - window_size + 1,), np.inf)
     i_ab = np.zeros((series1.shape[0] - window_size + 1,))
@@ -35,11 +36,16 @@ def stamp(series1, series2, window_size, self_join, distance=None):
 
     for i in range(n2 - window_size + 1):
         print('{}/{}'.format(i + 1, n2 - window_size + 1))
-        dp = mass(series2[i:i + window_size], series1_freq, series1.shape[0], mean_t, std_t)
 
         if self_join:
+            dp = mass(series2[i:i + window_size], series1_freq, series1.shape[0], mean_t, std_t, mean_t[i], std_t[i])
             left, right = max(0, i - window_size//2), min(i + window_size//2, n2)
             dp[left:right+1] = np.inf
+        else:
+            query = series2[i:i + window_size]
+            mean_q = np.mean(query)
+            std_q = np.mean(query)
+            dp = mass(query, series1_freq, series1.shape[0], mean_t, std_t, mean_t[i], std_t[i], mean_q, std_q)
 
         p_ab, i_ab = elementwise_min(p_ab, i_ab, dp, i)
 

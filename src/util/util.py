@@ -39,10 +39,9 @@ def moving_std(time_series, moving_average, windows_size):
     return np.sqrt(sigma2)
 
 
-def mass(query, time_series_freq, len_t, mean_t, std_t):
+def mass(query, time_series_freq, len_t, mean_t, std_t, mean_q, std_q):
     m = query.shape[0]
     qt = sliding_dot_product(query, time_series_freq, len_t)
-    mean_q, std_q = np.mean(query), np.std(query)
 
     temp_term = (qt - m * mean_q * mean_t)/(std_q * std_t)
     # d = np.sqrt(2 * (m * np.ones(temp_term.shape) - np.around(temp_term, decimals=9)))
@@ -56,8 +55,9 @@ def elementwise_min(mp, mpi, dp, idx):
 
     mpi[min_idx] = idx
     mp[min_idx] = dp[min_idx]
-
-    mp[idx], mpi[idx] = np.min(dp), np.argmin(dp)
-    return mp, mpi
+    
+    return np.minimum(mp, dp), mpi
+    # mp[idx], mpi[idx] = np.min(dp), np.argmin(dp)
+    # return mp, mpi
 
 
