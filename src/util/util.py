@@ -21,13 +21,17 @@ def moving_std(time_series, moving_average, windows_size):
     return np.sqrt(sigma2)
 
 
+def distance_profile(qt, window_size, mean_t, std_t, mean_q, std_q):
+    temp_term = (qt - window_size * mean_q * mean_t)/(std_q * std_t)
+    d = 2 * (window_size * np.ones(temp_term.shape) - temp_term)
+    return np.sqrt(np.abs(d))
+
+
 def mass(query, time_series_freq, len_t, mean_t, std_t, mean_q, std_q):
     m = query.shape[0]
     qt = sliding_dot_product(query, time_series_freq, len_t)
 
     temp_term = (qt - m * mean_q * mean_t)/(std_q * std_t)
-    # d = np.sqrt(2 * (m * np.ones(temp_term.shape) - np.around(temp_term, decimals=9)))
-    # return d
     d = 2 * (m * np.ones(temp_term.shape) - temp_term)
     return np.sqrt(np.abs(d))
 
