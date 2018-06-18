@@ -18,8 +18,14 @@ class TestFindMotif(object):
         window_size = 800
 
         penguin_freq = np.fft.fft(np.append(penguin, np.zeros((window_size, 1))))
-        motif_pair, neighbor = find_motif(mp, mpi, window_size, penguin, penguin_freq)
 
-        groud_truth_pair, groud_truth_neighbor = np.array([6062, 31329]), np.array([73168, 29234, 108643])
-        assert np.allclose(motif_pair, groud_truth_pair)
-        assert np.allclose(groud_truth_neighbor, neighbor)
+        result = find_motif(mp, mpi, window_size, penguin, penguin_freq, k=2)
+        motif_pair_0, neighbor_0 = result[0]
+        motif_pair_1, neighbor_1 = result[1]
+
+        groud_truth_pair_0, groud_truth_neighbor_0 = np.array([6062, 31329]), np.array([73168, 29234, 108643])
+        groud_truth_pair_1, groud_truth_neighbor_1 = np.array([6030, 103190]), np.array([31300, 73143, 24590, 59546, 29208])
+        assert np.allclose(motif_pair_0, groud_truth_pair_0)
+        assert np.allclose(groud_truth_neighbor_0, neighbor_0)
+        assert np.allclose(motif_pair_1, groud_truth_pair_1)
+        assert np.allclose(groud_truth_neighbor_1, neighbor_1)

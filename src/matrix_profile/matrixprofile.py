@@ -75,7 +75,7 @@ def stomp(series1, series2, window_size, self_join, distance=None):
         print('{}/{}'.format(i + 1, n2 - window_size + 1))
 
         # for j in reversed(range(1, n2 - window_size + 1)):
-        #     qt[j] = qt[j - 1] + (series1[i + window_size - 1] * series1[j + window_size - 1])
+        #     qt[j] = qt[j - 1] - (series1[i - 1] * series1[j - 1]) + (series1[i + window_size - 1] * series1[j + window_size - 1])
 
         qt = np.roll(qt, 1)
         term1 = series1[i - 1] * np.roll(series1[: n2 - window_size + 1], 1).reshape(qt.shape)
