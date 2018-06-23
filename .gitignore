@@ -178,5 +178,7 @@ Session.vim
 # auto-generated tag files
 tags
 
+/script
+
 
 # End of https://www.gitignore.io/api/vim,python,pycharm

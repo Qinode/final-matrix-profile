@@ -10,6 +10,9 @@ logger = logging.getLogger(__name__)
     # return naive(series1, series2, window, distance)
 
 
+# todo: add test case of non self-join
+
+
 def naive(series1, series2, window, distance=None):
     dm = np.full((series1.shape[0] - window + 1, series2.shape[0] - window + 1), np.inf)
     for i in range(series1.shape[0] - window + 1):
@@ -52,6 +55,7 @@ def stamp(series1, series2, window_size, self_join, distance=None):
     return p_ab, i_ab
 
 
+# series1 join series2
 def stomp(series1, series2, window_size, self_join, distance=None):
 
     n2 = series2.shape[0]

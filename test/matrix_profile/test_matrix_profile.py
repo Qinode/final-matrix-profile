@@ -100,3 +100,18 @@ class TestMP(object):
         mp, mpi = stomp(data, data, 800, self_join=True)
         assert np.array_equal(mpi.reshape(mpi_test.shape), mpi_test)
         assert np.allclose(mp.reshape(mp_test.shape), mp_test, atol=1e-04)
+
+    def test_stomp_full(self):
+        path = os.path.abspath(os.path.dirname(__file__))
+
+        data = scipy.io.loadmat(os.path.join(path, 'test_data/penguin'))['penguin_sample']
+        mp_test = scipy.io.loadmat(os.path.join(path, 'test_data/py_mp_full.mat'))['mp']
+        mpi_test = scipy.io.loadmat(os.path.join(path, 'test_data/py_mpi_full.mat'))['mpi']
+
+        mp, mpi = stomp(data, data, 800, self_join=True)
+
+        scipy.io.savemat(os.path.join(path, 'test_data/py_mp_full_stomp.mat'), {'mp': mp})
+        scipy.io.savemat(os.path.join(path, 'test_data/py_mpi_full_stomp.mat'), {'mpi': mpi})
+
+        assert np.allclose(np.around(mp.reshape(mp_test.shape), decimals=4), mp_test, atol=1e-04)
+        assert np.array_equal(mpi.reshape(mpi_test.shape), mpi_test)
