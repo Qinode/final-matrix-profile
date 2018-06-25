@@ -1,20 +1,20 @@
 import numpy as np
-from src.util.util import moving_average, mean_std, moving_std
+from src.util.util import moving_average, moving_std
+
 
 class TestMoving(object):
 
-    def test_moving_average(self):
-        window_size = 10
-        series_size = 1000
+    def mean_std(self, window_size, series):
+        mean = np.zeros((series.shape[0] - window_size + 1))
+        std = np.zeros((series.shape[0] - window_size + 1))
 
-        series = np.arange(series_size)
+        for i in range(series.shape[0] - window_size + 1):
+            mean[i] = np.mean(series[i: i+window_size])
+            std[i] = np.std(series[i: i+window_size])
 
-        ma = moving_average(series, window_size)
-        ma_test, _ = mean_std(window_size, series)
+        return mean, std
 
-        assert np.allclose(ma, ma_test)
-
-    def test_moving_std(self):
+    def test_moving(self):
         window_size = 10
         series_size = 1000
 
@@ -22,7 +22,7 @@ class TestMoving(object):
 
         ma = moving_average(series, window_size)
         mstd = moving_std(series, ma, window_size)
-        ma_test, mstd_test = mean_std(window_size, series)
+        ma_test, mstd_test = self.mean_std(window_size, series)
 
         assert np.allclose(ma, ma_test)
         assert np.allclose(mstd, mstd_test)
@@ -35,7 +35,7 @@ class TestMoving(object):
 
         ma = moving_average(series, window_size)
         mstd = moving_std(series, ma, window_size)
-        ma_test, mstd_test = mean_std(window_size, series)
+        ma_test, mstd_test = self.mean_std(window_size, series)
 
         assert np.allclose(ma, ma_test)
         assert np.allclose(mstd, mstd_test)

@@ -4,8 +4,13 @@ from src.util.util import moving_std
 from src.util.util import mass
 
 
-def find_motif(mp, mpi, window_size, time_series, time_series_freq, k=3, R=2):
+def find_motif(mp, mpi, window_size, time_series, k=3, R=[2, 2, 2]):
+    assert len(R) == k
+
+    time_series_freq = np.fft.fft(np.append(time_series, np.zeros((window_size, 1))))
     mp, mpi = mp.copy(), mpi.copy()
+    R.sort()
+
     result = []
 
     for i in range(k):
@@ -29,7 +34,7 @@ def find_motif(mp, mpi, window_size, time_series, time_series_freq, k=3, R=2):
         exclude_end = min(motif_idx + exclude_window + 1, mp.shape[0])
 
         distance_profile[exclude_start:exclude_end] = np.inf
-        distance_profile[distance_profile > (min_dis * R)] = np.inf
+        distance_profile[distance_profile > (min_dis * R[i])] = np.inf
 
         motif_idx = int(motif_pair_idx[1])
         exclude_start = max(0, motif_idx - exclude_window)

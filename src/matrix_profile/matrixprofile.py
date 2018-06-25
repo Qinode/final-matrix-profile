@@ -10,17 +10,16 @@ logger = logging.getLogger(__name__)
     # return naive(series1, series2, window, distance)
 
 
-# todo: add test case of non self-join
-
-
 def naive(series1, series2, window, distance=None):
+    self_join = np.allclose(series1, series2)
+
     dm = np.full((series1.shape[0] - window + 1, series2.shape[0] - window + 1), np.inf)
     for i in range(series1.shape[0] - window + 1):
         for j in range(series2.shape[0] - window + 1):
-            if i - (window/2) <= j <= i + (window/2):
-                continue
-            else:
-                dm[i][j] = z_norm_euclidean(series2[j: j + window], series1[i: i + window])
+            if self_join:
+                if i - (window/2) <= j <= i + (window/2):
+                    continue
+            dm[i][j] = z_norm_euclidean(series2[j: j + window], series1[i: i + window])
 
     return np.amin(dm, axis=0).reshape(series1.shape[0] - window + 1, 1), np.argmin(dm, axis=0).reshape(series1.shape[0] - window + 1, 1)
 

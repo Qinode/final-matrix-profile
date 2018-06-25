@@ -17,9 +17,7 @@ class TestFindMotif(object):
 
         window_size = 800
 
-        penguin_freq = np.fft.fft(np.append(penguin, np.zeros((window_size, 1))))
-
-        result = find_motif(mp, mpi, window_size, penguin, penguin_freq, k=2)
+        result = find_motif(mp, mpi, window_size, penguin, k=2, R=[2, 2])
         motif_pair_0, neighbor_0 = result[0]
         motif_pair_1, neighbor_1 = result[1]
 
