@@ -179,6 +179,7 @@ Session.vim
 tags
 
 /script
+/paper
 
 
 # End of https://www.gitignore.io/api/vim,python,pycharm

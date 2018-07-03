@@ -10,12 +10,12 @@ def sliding_dot_product(query, time_series_freq, len_t):
 
 
 def moving_average(time_series, window_size):
-    cum_sum = np.cumsum(time_series, dtype=float)
+    cum_sum = np.nancumsum(time_series, dtype=float)
     return (cum_sum[window_size-1:] - np.append(np.array([0]), cum_sum[:-window_size])) / window_size
 
 
 def moving_std(time_series, moving_average, windows_size):
-    cum_sum2 = np.cumsum(np.power(time_series, 2), dtype=float)
+    cum_sum2 = np.nancumsum(np.power(time_series, 2), dtype=float)
     cum_sum2 = cum_sum2[windows_size-1:] - np.append(np.array([0]), cum_sum2[:-windows_size])
     sigma2 = (cum_sum2 / windows_size) - np.power(moving_average, 2)
     return np.sqrt(sigma2)

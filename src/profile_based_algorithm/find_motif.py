@@ -51,7 +51,7 @@ def find_motif(mp, mpi, window_size, time_series, k=3, R=[2, 2, 2]):
                 neighbor_idx[i] = sorted_dp_idx[0]
                 sorted_dp, sorted_dp_idx = np.delete(sorted_dp, 0), np.delete(sorted_dp_idx, 0)
 
-                selected_neighbor = np.where(np.abs(sorted_dp_idx - neighbor_idx[i]) < exclude_window)
+                selected_neighbor = np.where(np.abs(sorted_dp_idx - neighbor_idx[i]) < exclude_window)[0]
                 sorted_dp, sorted_dp_idx = np.delete(sorted_dp, selected_neighbor), np.delete(sorted_dp_idx, selected_neighbor)
 
         neighbor_idx = np.delete(neighbor_idx, np.where(neighbor_idx == -1)[0])
