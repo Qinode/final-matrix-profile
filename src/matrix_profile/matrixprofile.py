@@ -123,7 +123,7 @@ def lrstomp(series1, series2, window_size, self_join, distance=None):
     mp_left, mp_right = np.full((n2 - window_size + 1, ), np.inf), np.full((n2 - window_size + 1, ), np.inf)
     mpi_left, mpi_right = -1 * np.ones((n2 - window_size + 1, )), -1 * np.ones((n2 - window_size + 1, ))
 
-    mp_right[:-1], mpi_right[:-1] = elementwise_min(mp_right[:-1], mpi_right[:-1], dp[:-1], 0)
+    mp_left[1:], mpi_left[1:] = elementwise_min(mp_left[1:], mpi_left[1:], dp[1:], 0)
 
     for i in range(1, n2 - window_size + 1):
         print('{}/{}'.format(i + 1, n2 - window_size + 1))
@@ -152,6 +152,7 @@ def lrstomp(series1, series2, window_size, self_join, distance=None):
         mp_right[:i], mpi_right[:i] = elementwise_min(mp_right[:i], mpi_right[:i], dp[:i], i)
 
     return (mp, mpi), (mp_left, mpi_left), (mp_right, mpi_right)
+
 
 # def stampi(series1, series2, new1, new2, p, i, window_size, self_join, distance=None):
 #     if series1.shape[0] < window_size or series2.shape[0]:
