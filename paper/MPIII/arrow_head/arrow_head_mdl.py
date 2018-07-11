@@ -1,7 +1,4 @@
-import scipy.io
-from src.mds.util import *
 from paper.MPIII.visual import *
-import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
 

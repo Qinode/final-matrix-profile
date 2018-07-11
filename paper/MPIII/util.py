@@ -13,11 +13,23 @@ def discretization_pre(time_series, windows_size):
     return min, max
 
 
-def discretization(time_series, min, max, bits):
+def norm_discretization(time_series, interval):
     mean = np.mean(time_series)
     std = np.std(time_series)
 
     time_series = (time_series - mean)/std if std != 0 else time_series - mean
+    return np.digitize(time_series, interval)
+
+
+def discretization(time_series, min, max, bits):
+    mean = np.mean(time_series)
+    std = np.std(time_series)
+
+    if std != 0:
+        time_series = (time_series - mean)/std
+    else:
+        time_series = time_series - mean
+
     return np.around(((time_series - min)/(max - min)) * (2 ** bits - 1)) + 1
 
 
