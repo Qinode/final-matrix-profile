@@ -1,4 +1,5 @@
 import numpy as np
+import scipy.stats
 
 
 def discretization_pre(time_series, windows_size):
@@ -13,7 +14,16 @@ def discretization_pre(time_series, windows_size):
     return min, max
 
 
-def norm_discretization(time_series, interval):
+def sax_discretization_pre(time_series, bits):
+    z_time_series = (time_series - np.mean(time_series)) / np.std(time_series)
+    min, max = np.min(z_time_series), np.max(z_time_series)
+    unit_z_time_series = (z_time_series - min) / (max - min)
+    mean, std = np.mean(unit_z_time_series), np.std(unit_z_time_series)
+    interval = scipy.stats.norm.ppf(np.arange(2 ** bits)/(2 ** bits), mean, std)
+    return interval
+
+
+def sax_discretization(time_series, interval):
     mean = np.mean(time_series)
     std = np.std(time_series)
 
@@ -84,6 +94,59 @@ def pick_best_candidates(time_sereis, t_min, t_max, candidates, candidate_idx, h
         nn_idx = int(mpi[candidate_idx[i]])
         nn = time_sereis[nn_idx:nn_idx + candidates[i].shape[0]]
         nn = discretization(nn, t_min, t_max, bits)
+        bit_save_hypo = nn.shape[0] * bits - rdl(nn, candidates[i], bits)
+
+        best_com = np.inf
+        compressed_by = 0
+        for h_idx, h in enumerate(hypothesis):
+            com_bit = rdl(candidates[i], h, bits)
+            if com_bit < best_com:
+                best_com = com_bit
+                compressed_by = h_idx
+
+        best_com = candidates[i].shape[0] * bits - best_com
+
+        if bit_save_hypo > best_com:
+            candidates_table[i][0] = bit_save_hypo
+            candidates_table[i][1] = 0
+        else:
+            candidates_table[i][0] = best_com
+            candidates_table[i][1] = 1
+
+    best_candidate = np.argmax(candidates_table[:, 0])
+
+    return candidates[best_candidate], candidate_idx[best_candidate], candidates_table[best_candidate][1], compressed_by
+
+
+def sax_pick_candidates(time_series, interval, window_size, mp, nums):
+    mp = mp.copy()
+    candidate_idxs = []
+    candidates = []
+
+    for i in range(nums):
+        candidate_idx = np.argmin(mp)
+        if mp[candidate_idx] == np.inf:
+            break
+        candidate = time_series[candidate_idx: candidate_idx + window_size]
+        candidates.append(sax_discretization(candidate, interval))
+        candidate_idxs.append(candidate_idx)
+
+        exc_start = max(0, candidate_idx - (window_size // 2))
+        exc_end = min(candidate_idx + (window_size // 2), mp.shape[0])
+
+        mp[exc_start: exc_end] = np.inf
+
+    return candidates, candidate_idxs
+
+
+# 0 for hypothesis, 1 for compressible
+def sax_pick_best_candidates(time_sereis, interval, candidates, candidate_idx, hypothesis, bits, mpi):
+    candidates_table = np.full(((len(candidate_idx), 2)), -np.inf)
+
+    for i in range(len(candidates)):
+        nn_idx = int(mpi[candidate_idx[i]])
+        nn = time_sereis[nn_idx:nn_idx + candidates[i].shape[0]]
+        nn = sax_discretization(nn, interval)
         bit_save_hypo = nn.shape[0] * bits - rdl(nn, candidates[i], bits)
 
         best_com = np.inf

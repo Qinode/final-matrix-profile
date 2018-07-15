@@ -16,8 +16,8 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
-        print("{}, {}, {}".format(len(C), len(H), U))
-        print(bit_cost)
+        # print("{}, {}, {}".format(len(C), len(H), U))
+        # print(bit_cost)
         candidates, candidate_idxs = pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums)
         if candidate_idxs == []:
             break
@@ -30,8 +30,62 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
         if cand_type == 0:
             H.append(best_cand)
             H_idx.append(cand_idx)
+            idx_bitsave.append([cand_idx, bit_cost, cand_type])
+            U -= 1
+
+            # if cand_idx not in compress_table:
+            #     compress_table[cand_idx] = []
+        else:
+            C.append(best_cand)
+            C_idx.append(cand_idx)
+            U -= 1
+            new_cost = bit(C, H, U, window_size, bits)
+            idx_bitsave.append([cand_idx, new_cost, cand_type])
+            if new_cost > bit_cost:
+                C, C_idx = C[:-1], C_idx[: -1]
+                # print("Compressing Stop, bits needed {}.".format(new_cost))
+                # break
+            else:
+                bit_cost = new_cost
+                if compress_by not in compress_table:
+                    compress_table[compress_by] = [cand_idx]
+                else:
+                    compress_table[compress_by].append(cand_idx)
+
+    return C_idx, H_idx, compress_table, idx_bitsave
+
+
+def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums, bits):
+    max_salient = np.around(time_series.shape[0] / window_size)
+    mp, mpi = mp.copy(), mpi.copy()
+
+    C, C_idx, H, H_idx = [], [], [], []
+    idx_bitsave = []
+    compress_table = {}
+    U = time_series.shape[0] - window_size + 1
+
+    bit_cost = U * window_size * bits
+
+    while True and (len(C) + len(H) <= max_salient) and U >= 0:
+        # print("{}, {}, {}".format(len(C), len(H), U))
+        # print(bit_cost)
+        candidates, candidate_idxs = sax_pick_candidates(time_series, interval, window_size, mp, nums)
+        if candidate_idxs == []:
+            break
+        best_cand, cand_idx, cand_type, compress_by = sax_pick_best_candidates(time_series, interval, candidates, candidate_idxs, H, bits, mpi)
+
+        exc_start = max(0, cand_idx - (window_size // 2))
+        exc_end = min(cand_idx + (window_size // 2), mp.shape[0])
+        mp[exc_start: exc_end] = np.inf
+
+        if cand_type == 0:
+            H.append(best_cand)
+            H_idx.append(cand_idx)
             idx_bitsave.append([cand_idx, bit_cost])
             U -= 1
+
+            # if cand_idx not in compress_table:
+            #     compress_table[cand_idx] = []
         else:
             C.append(best_cand)
             C_idx.append(cand_idx)
@@ -40,7 +94,7 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
             idx_bitsave.append([cand_idx, new_cost])
             if new_cost > bit_cost:
                 C, C_idx = C[:-1], C_idx[: -1]
-                print("Compressing Stop, bits needed {}.".format(new_cost))
+                # print("Compressing Stop, bits needed {}.".format(new_cost))
                 # break
             else:
                 bit_cost = new_cost
