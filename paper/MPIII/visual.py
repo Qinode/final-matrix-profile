@@ -16,11 +16,11 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
-        # print("{}, {}, {}".format(len(C), len(H), U))
-        # print(bit_cost)
         candidates, candidate_idxs = pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums)
-        if candidate_idxs == []:
+
+        if not candidate_idxs:
             break
+
         best_cand, cand_idx, cand_type, compress_by = pick_best_candidates(time_series, t_min, t_max, candidates, candidate_idxs, H, bits, mpi)
 
         exc_start = max(0, cand_idx - (window_size // 2))
@@ -33,24 +33,21 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
             idx_bitsave.append([cand_idx, bit_cost, cand_type])
             U -= 1
 
-            # if cand_idx not in compress_table:
-            #     compress_table[cand_idx] = []
+            if cand_idx not in compress_table:
+                compress_table[cand_idx] = []
         else:
             C.append(best_cand)
             C_idx.append(cand_idx)
             U -= 1
             new_cost = bit(C, H, U, window_size, bits)
             idx_bitsave.append([cand_idx, new_cost, cand_type])
-            if new_cost > bit_cost:
-                C, C_idx = C[:-1], C_idx[: -1]
-                # print("Compressing Stop, bits needed {}.".format(new_cost))
-                # break
+
+            bit_cost = min(bit_cost, new_cost)
+
+            if compress_by not in compress_table:
+                compress_table[compress_by] = [cand_idx]
             else:
-                bit_cost = new_cost
-                if compress_by not in compress_table:
-                    compress_table[compress_by] = [cand_idx]
-                else:
-                    compress_table[compress_by].append(cand_idx)
+                compress_table[compress_by].append(cand_idx)
 
     return C_idx, H_idx, compress_table, idx_bitsave
 
@@ -67,11 +64,11 @@ def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
-        # print("{}, {}, {}".format(len(C), len(H), U))
-        # print(bit_cost)
         candidates, candidate_idxs = sax_pick_candidates(time_series, interval, window_size, mp, nums)
-        if candidate_idxs == []:
+
+        if not candidate_idxs:
             break
+
         best_cand, cand_idx, cand_type, compress_by = sax_pick_best_candidates(time_series, interval, candidates, candidate_idxs, H, bits, mpi)
 
         exc_start = max(0, cand_idx - (window_size // 2))
@@ -81,27 +78,24 @@ def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums,
         if cand_type == 0:
             H.append(best_cand)
             H_idx.append(cand_idx)
-            idx_bitsave.append([cand_idx, bit_cost])
+            idx_bitsave.append([cand_idx, bit_cost, cand_type])
             U -= 1
 
-            # if cand_idx not in compress_table:
-            #     compress_table[cand_idx] = []
+            if cand_idx not in compress_table:
+                compress_table[cand_idx] = []
         else:
             C.append(best_cand)
             C_idx.append(cand_idx)
             U -= 1
             new_cost = bit(C, H, U, window_size, bits)
-            idx_bitsave.append([cand_idx, new_cost])
-            if new_cost > bit_cost:
-                C, C_idx = C[:-1], C_idx[: -1]
-                # print("Compressing Stop, bits needed {}.".format(new_cost))
-                # break
+            idx_bitsave.append([cand_idx, new_cost, cand_type])
+
+            bit_cost = min(bit_cost, new_cost)
+
+            if compress_by not in compress_table:
+                compress_table[compress_by] = [cand_idx]
             else:
-                bit_cost = new_cost
-                if compress_by not in compress_table:
-                    compress_table[compress_by] = [cand_idx]
-                else:
-                    compress_table[compress_by].append(cand_idx)
+                compress_table[compress_by].append(cand_idx)
 
     return C_idx, H_idx, compress_table, idx_bitsave
 
