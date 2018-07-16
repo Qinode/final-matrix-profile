@@ -50,6 +50,7 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
 
             idx_bitsave.append([cand_idx, new_cost, cand_type])
 
+            compress_by = H_idx[compress_by]
             if compress_by not in compress_table:
                 compress_table[compress_by] = [cand_idx]
             else:
@@ -104,6 +105,7 @@ def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums,
 
             bit_cost = min(bit_cost, new_cost)
 
+            compress_by = H_idx[compress_by]
             if compress_by not in compress_table:
                 compress_table[compress_by] = [cand_idx]
             else:
