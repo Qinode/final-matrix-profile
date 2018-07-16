@@ -30,7 +30,13 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
         if cand_type == 0:
             H.append(best_cand)
             H_idx.append(cand_idx)
-            idx_bitsave.append([cand_idx, bit_cost, cand_type])
+
+            if idx_bitsave:
+                pre_cost = idx_bitsave[-1][1]
+                idx_bitsave.append([cand_idx, pre_cost, cand_type])
+            else:
+                idx_bitsave.append([cand_idx, bit_cost, cand_type])
+
             U -= 1
 
             if cand_idx not in compress_table:
@@ -40,9 +46,9 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
             C_idx.append(cand_idx)
             U -= 1
             new_cost = bit(C, H, U, window_size, bits)
-            idx_bitsave.append([cand_idx, new_cost, cand_type])
-
             bit_cost = min(bit_cost, new_cost)
+
+            idx_bitsave.append([cand_idx, new_cost, cand_type])
 
             if compress_by not in compress_table:
                 compress_table[compress_by] = [cand_idx]
@@ -78,7 +84,13 @@ def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums,
         if cand_type == 0:
             H.append(best_cand)
             H_idx.append(cand_idx)
-            idx_bitsave.append([cand_idx, bit_cost, cand_type])
+
+            if idx_bitsave:
+                pre_cost = idx_bitsave[-1][1]
+                idx_bitsave.append([cand_idx, pre_cost, cand_type])
+            else:
+                idx_bitsave.append([cand_idx, bit_cost, cand_type])
+
             U -= 1
 
             if cand_idx not in compress_table:
