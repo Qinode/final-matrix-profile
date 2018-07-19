@@ -1,0 +1,848 @@
+BeetleFly - 3 bits
+BirdChicken - 3 bits
+Beef - 3 bits
+BeetleFly DNorm Compression time 0.33276796340942383.
+BirdChicken DNorm Compression time 0.422529935836792.
+BeetleFly SAX Compression time 0.30028200149536133.
+Beef DNorm Compression time 0.7431778907775879.
+BirdChicken SAX Compression time 0.41808104515075684.
+BeetleFly - 4 bits
+BirdChicken - 4 bits
+BeetleFly DNorm Compression time 0.40636157989501953.
+Beef SAX Compression time 0.8661551475524902.
+BirdChicken DNorm Compression time 0.4267444610595703.
+BeetleFly SAX Compression time 0.4590141773223877.
+BirdChicken SAX Compression time 0.4255404472351074.
+Beef - 4 bits
+BeetleFly - 5 bits
+BirdChicken - 5 bits
+BeetleFly DNorm Compression time 0.47228097915649414.
+Beef DNorm Compression time 0.6548731327056885.
+BirdChicken DNorm Compression time 0.39757513999938965.
+BirdChicken SAX Compression time 0.22500205039978027.
+BeetleFly SAX Compression time 0.442920446395874.
+BirdChicken - 6 bits
+BeetleFly - 6 bits
+Beef SAX Compression time 0.9594516754150391.
+BirdChicken DNorm Compression time 0.41773486137390137.
+Beef - 5 bits
+BeetleFly DNorm Compression time 0.5583744049072266.
+BirdChicken SAX Compression time 0.44954609870910645.
+BeetleFly SAX Compression time 0.3365044593811035.
+BirdChicken - 7 bits
+BeetleFly - 7 bits
+Beef DNorm Compression time 0.8804378509521484.
+BirdChicken DNorm Compression time 0.40155601501464844.
+BeetleFly DNorm Compression time 0.4966926574707031.
+Beef SAX Compression time 0.560234785079956.
+BirdChicken SAX Compression time 0.46488022804260254.
+BeetleFly SAX Compression time 0.4652900695800781.
+Beef - 6 bits
+BirdChicken finished.
+BeetleFly finished.
+Beef DNorm Compression time 0.9751813411712646.
+Beef SAX Compression time 0.6486175060272217.
+ArrowHead - 3 bits
+Beef - 7 bits
+Beef DNorm Compression time 0.9619314670562744.
+Coffee - 3 bits
+Beef SAX Compression time 0.7627933025360107.
+Coffee DNorm Compression time 0.7947382926940918.
+Car - 3 bits
+Beef finished.
+Coffee SAX Compression time 0.753920316696167.
+Coffee - 4 bits
+Coffee DNorm Compression time 0.5986697673797607.
+Coffee SAX Compression time 0.6499102115631104.
+Coffee - 5 bits
+Coffee DNorm Compression time 0.6285624504089355.
+Car DNorm Compression time 3.4140303134918213.
+Coffee SAX Compression time 0.49268031120300293.
+Coffee - 6 bits
+Coffee DNorm Compression time 0.7754027843475342.
+Car SAX Compression time 2.4820425510406494.
+Coffee SAX Compression time 0.814929723739624.
+Coffee - 7 bits
+Car - 4 bits
+Coffee DNorm Compression time 0.5000061988830566.
+Coffee SAX Compression time 0.41370320320129395.
+CBF - 3 bits
+Coffee finished.
+Car DNorm Compression time 3.250624895095825.
+Adiac - 3 bits
+Car SAX Compression time 3.218900680541992.
+ArrowHead DNorm Compression time 15.270488023757935.
+Car - 5 bits
+Car DNorm Compression time 2.7154653072357178.
+Car SAX Compression time 3.3781309127807617.
+Car - 6 bits
+Car DNorm Compression time 2.7708215713500977.
+ArrowHead SAX Compression time 10.43069839477539.
+ArrowHead - 4 bits
+Car SAX Compression time 3.362638235092163.
+Car - 7 bits
+Car DNorm Compression time 3.8102314472198486.
+Car SAX Compression time 4.52173638343811.
+Car finished.
+ArrowHead DNorm Compression time 11.528801441192627.
+Cricket_X - 3 bits
+Cricket_Y - 3 bits
+ArrowHead SAX Compression time 10.032024383544922.
+ArrowHead - 5 bits
+Cricket_Z - 3 bits
+DiatomSizeReduction - 3 bits
+ArrowHead DNorm Compression time 12.28766131401062.
+ArrowHead SAX Compression time 13.027900457382202.
+ArrowHead - 6 bits
+ArrowHead DNorm Compression time 14.804491758346558.
+ArrowHead SAX Compression time 16.273128271102905.
+ArrowHead - 7 bits
+DiatomSizeReduction DNorm Compression time 50.72097945213318.
+ArrowHead DNorm Compression time 9.442092895507812.
+ArrowHead SAX Compression time 18.00861668586731.
+ArrowHead finished.
+DistalPhalanxOutlineAgeGroup - 3 bits
+DiatomSizeReduction SAX Compression time 42.220744132995605.
+DiatomSizeReduction - 4 bits
+DiatomSizeReduction DNorm Compression time 35.42189431190491.
+DiatomSizeReduction SAX Compression time 32.442214250564575.
+DiatomSizeReduction - 5 bits
+DiatomSizeReduction DNorm Compression time 34.090248823165894.
+DiatomSizeReduction SAX Compression time 39.47113609313965.
+DiatomSizeReduction - 6 bits
+DiatomSizeReduction DNorm Compression time 41.79073214530945.
+DiatomSizeReduction SAX Compression time 54.87461543083191.
+DiatomSizeReduction - 7 bits
+DistalPhalanxOutlineAgeGroup DNorm Compression time 263.8080942630768.
+DiatomSizeReduction DNorm Compression time 48.66736841201782.
+DiatomSizeReduction SAX Compression time 53.975541830062866.
+DiatomSizeReduction finished.
+DistalPhalanxOutlineCorrect - 3 bits
+DistalPhalanxOutlineAgeGroup SAX Compression time 207.65496039390564.
+DistalPhalanxOutlineAgeGroup - 4 bits
+DistalPhalanxOutlineAgeGroup DNorm Compression time 198.57555079460144.
+Adiac DNorm Compression time 818.0382394790649.
+Cricket_Z DNorm Compression time 856.3345255851746.
+Cricket_Y DNorm Compression time 936.2328469753265.
+DistalPhalanxOutlineAgeGroup SAX Compression time 216.0248749256134.
+DistalPhalanxOutlineAgeGroup - 5 bits
+Cricket_X DNorm Compression time 985.0874254703522.
+DistalPhalanxOutlineAgeGroup DNorm Compression time 240.70644760131836.
+Adiac SAX Compression time 565.2812328338623.
+Adiac - 4 bits
+DistalPhalanxOutlineAgeGroup SAX Compression time 259.45628547668457.
+DistalPhalanxOutlineAgeGroup - 6 bits
+CBF DNorm Compression time 1543.3974764347076.
+DistalPhalanxOutlineCorrect DNorm Compression time 1098.915947675705.
+DistalPhalanxOutlineAgeGroup DNorm Compression time 264.0310232639313.
+Cricket_X SAX Compression time 772.079803943634.
+Cricket_X - 4 bits
+Cricket_Z SAX Compression time 895.8970623016357.
+Cricket_Z - 4 bits
+Cricket_Y SAX Compression time 826.7556421756744.
+Cricket_Y - 4 bits
+Adiac DNorm Compression time 568.2602896690369.
+DistalPhalanxOutlineAgeGroup SAX Compression time 343.7088346481323.
+DistalPhalanxOutlineAgeGroup - 7 bits
+DistalPhalanxOutlineCorrect SAX Compression time 699.2348515987396.
+DistalPhalanxOutlineCorrect - 4 bits
+Adiac SAX Compression time 512.6437332630157.
+Adiac - 5 bits
+DistalPhalanxOutlineAgeGroup DNorm Compression time 368.3447120189667.
+Cricket_Y DNorm Compression time 728.1000716686249.
+Cricket_X DNorm Compression time 756.9902153015137.
+Cricket_Z DNorm Compression time 755.0847272872925.
+DistalPhalanxOutlineAgeGroup SAX Compression time 389.32214069366455.
+DistalPhalanxOutlineAgeGroup finished.
+CBF SAX Compression time 1346.104465007782.
+CBF - 4 bits
+DistalPhalanxTW - 3 bits
+Adiac DNorm Compression time 496.699768781662.
+DistalPhalanxOutlineCorrect DNorm Compression time 772.1075422763824.
+Cricket_X SAX Compression time 575.4687101840973.
+Cricket_X - 5 bits
+DistalPhalanxTW DNorm Compression time 253.92151427268982.
+Cricket_Z SAX Compression time 597.8491413593292.
+Cricket_Z - 5 bits
+Cricket_Y SAX Compression time 625.0764441490173.
+Cricket_Y - 5 bits
+DistalPhalanxTW SAX Compression time 207.7854254245758.
+DistalPhalanxTW - 4 bits
+Adiac SAX Compression time 500.01178669929504.
+Adiac - 6 bits
+DistalPhalanxTW DNorm Compression time 197.48010325431824.
+Cricket_X DNorm Compression time 578.6577897071838.
+Cricket_Y DNorm Compression time 560.9761316776276.
+DistalPhalanxTW SAX Compression time 214.00536608695984.
+DistalPhalanxTW - 5 bits
+Cricket_Z DNorm Compression time 628.3590769767761.
+DistalPhalanxOutlineCorrect SAX Compression time 905.6907539367676.
+DistalPhalanxOutlineCorrect - 5 bits
+DistalPhalanxTW DNorm Compression time 241.27972626686096.
+Adiac DNorm Compression time 638.9143149852753.
+CBF DNorm Compression time 1375.7031664848328.
+DistalPhalanxTW SAX Compression time 286.596239566803.
+DistalPhalanxTW - 6 bits
+Cricket_Z SAX Compression time 568.7193412780762.
+Cricket_Z - 6 bits
+Cricket_X SAX Compression time 660.1188676357269.
+Cricket_X - 6 bits
+Cricket_Y SAX Compression time 719.3659744262695.
+Cricket_Y - 6 bits
+DistalPhalanxTW DNorm Compression time 250.96789622306824.
+Adiac SAX Compression time 750.010363817215.
+Adiac - 7 bits
+DistalPhalanxOutlineCorrect DNorm Compression time 882.130343914032.
+DistalPhalanxTW SAX Compression time 336.7496259212494.
+DistalPhalanxTW - 7 bits
+Cricket_Y DNorm Compression time 569.7905561923981.
+Cricket_X DNorm Compression time 756.4964430332184.
+Cricket_Z DNorm Compression time 822.0334746837616.
+DistalPhalanxTW DNorm Compression time 391.2769367694855.
+Adiac DNorm Compression time 816.930418252945.
+DistalPhalanxTW SAX Compression time 408.96907782554626.
+DistalPhalanxTW finished.
+CBF SAX Compression time 1423.1524608135223.
+CBF - 5 bits
+Earthquakes - 3 bits
+Cricket_Y SAX Compression time 901.8950622081757.
+Cricket_Y - 7 bits
+Earthquakes DNorm Compression time 257.63083243370056.
+Cricket_X SAX Compression time 910.1486177444458.
+Cricket_X - 7 bits
+Cricket_Z SAX Compression time 876.1596450805664.
+Cricket_Z - 7 bits
+DistalPhalanxOutlineCorrect SAX Compression time 1191.4130897521973.
+DistalPhalanxOutlineCorrect - 6 bits
+Earthquakes SAX Compression time 298.4977934360504.
+Earthquakes - 4 bits
+Earthquakes DNorm Compression time 276.2676479816437.
+Adiac SAX Compression time 934.1623883247375.
+Adiac finished.
+ECG200 - 3 bits
+ECG200 DNorm Compression time 15.236710548400879.
+ECG200 SAX Compression time 11.525376558303833.
+ECG200 - 4 bits
+ECG200 DNorm Compression time 8.507831335067749.
+ECG200 SAX Compression time 10.729044437408447.
+ECG200 - 5 bits
+ECG200 DNorm Compression time 13.060271978378296.
+ECG200 SAX Compression time 14.53274941444397.
+ECG200 - 6 bits
+ECG200 DNorm Compression time 16.76909565925598.
+ECG200 SAX Compression time 21.30601406097412.
+ECG200 - 7 bits
+ECG200 DNorm Compression time 21.138850688934326.
+ECG200 SAX Compression time 22.72730278968811.
+ECG200 finished.
+ECGFiveDays - 3 bits
+Earthquakes SAX Compression time 303.0944278240204.
+Earthquakes - 5 bits
+Cricket_Y DNorm Compression time 1046.2698137760162.
+Cricket_Z DNorm Compression time 1023.0671508312225.
+Cricket_X DNorm Compression time 1066.3877217769623.
+Earthquakes DNorm Compression time 304.609911441803.
+CBF DNorm Compression time 1490.3423056602478.
+DistalPhalanxOutlineCorrect DNorm Compression time 1211.596363544464.
+Earthquakes SAX Compression time 277.77934861183167.
+Earthquakes - 6 bits
+Earthquakes DNorm Compression time 318.4456853866577.
+Cricket_Y SAX Compression time 1127.43159866333.
+Cricket_Y finished.
+FaceFour - 3 bits
+FaceFour DNorm Compression time 2.818596363067627.
+FaceFour SAX Compression time 1.83878755569458.
+FaceFour - 4 bits
+FaceFour DNorm Compression time 2.275631904602051.
+FaceFour SAX Compression time 2.186779737472534.
+FaceFour - 5 bits
+FaceFour DNorm Compression time 2.7845876216888428.
+Earthquakes SAX Compression time 334.42633605003357.
+FaceFour SAX Compression time 2.9352903366088867.
+Earthquakes - 7 bits
+FaceFour - 6 bits
+FaceFour DNorm Compression time 1.335494041442871.
+FaceFour SAX Compression time 3.44256854057312.
+FaceFour - 7 bits
+FaceFour DNorm Compression time 2.69789719581604.
+FaceFour SAX Compression time 3.1677403450012207.
+FaceFour finished.
+FISH - 3 bits
+Cricket_Z SAX Compression time 1158.8953416347504.
+Cricket_Z finished.
+Gun_Point - 3 bits
+Cricket_X SAX Compression time 1151.5575971603394.
+Cricket_X finished.
+Gun_Point DNorm Compression time 16.126842737197876.
+FISH DNorm Compression time 104.69165086746216.
+Gun_Point SAX Compression time 8.499577045440674.
+Gun_Point - 4 bits
+Gun_Point DNorm Compression time 7.563867568969727.
+Ham - 3 bits
+Gun_Point SAX Compression time 12.009719848632812.
+Gun_Point - 5 bits
+Ham DNorm Compression time 14.150882959365845.
+Gun_Point DNorm Compression time 8.26183533668518.
+Ham SAX Compression time 13.856933832168579.
+Ham - 4 bits
+Gun_Point SAX Compression time 15.037935256958008.
+Gun_Point - 6 bits
+Ham DNorm Compression time 13.030695915222168.
+Gun_Point DNorm Compression time 18.424668550491333.
+Ham SAX Compression time 15.49913239479065.
+Ham - 5 bits
+Ham DNorm Compression time 14.346057176589966.
+Gun_Point SAX Compression time 21.93237566947937.
+Gun_Point - 7 bits
+Ham SAX Compression time 15.38312816619873.
+Ham - 6 bits
+Gun_Point DNorm Compression time 22.968331575393677.
+Ham DNorm Compression time 14.716538429260254.
+Ham SAX Compression time 19.935499668121338.
+Ham - 7 bits
+Gun_Point SAX Compression time 27.2798912525177.
+Gun_Point finished.
+FISH SAX Compression time 144.1568911075592.
+FISH - 4 bits
+Ham DNorm Compression time 17.039189338684082.
+Herring - 3 bits
+Herring DNorm Compression time 3.8802754878997803.
+Herring SAX Compression time 2.8709044456481934.
+Herring - 4 bits
+Herring DNorm Compression time 3.80596661567688.
+Herring SAX Compression time 3.4801158905029297.
+Herring - 5 bits
+Ham SAX Compression time 20.136085748672485.
+Herring DNorm Compression time 3.8998470306396484.
+Ham finished.
+Herring SAX Compression time 5.079773187637329.
+ItalyPowerDemand - 3 bits
+Herring - 6 bits
+Herring DNorm Compression time 3.587783098220825.
+Herring SAX Compression time 4.477667570114136.
+Herring - 7 bits
+Earthquakes DNorm Compression time 338.3555610179901.
+Herring DNorm Compression time 3.785904884338379.
+Herring SAX Compression time 4.105276107788086.
+Herring finished.
+FISH DNorm Compression time 58.77746057510376.
+Lighting2 - 3 bits
+Lighting2 DNorm Compression time 5.844412565231323.
+Lighting2 SAX Compression time 4.0654284954071045.
+Lighting2 - 4 bits
+ECGFiveDays DNorm Compression time 1687.861298084259.
+Lighting2 DNorm Compression time 5.8328118324279785.
+Lighting2 SAX Compression time 4.805214881896973.
+Lighting2 - 5 bits
+Lighting2 DNorm Compression time 5.325437784194946.
+Lighting2 SAX Compression time 6.1832945346832275.
+Lighting2 - 6 bits
+Lighting2 DNorm Compression time 4.830786943435669.
+Lighting2 SAX Compression time 6.263051271438599.
+Lighting2 - 7 bits
+Lighting2 DNorm Compression time 5.477380990982056.
+Lighting2 SAX Compression time 5.950647592544556.
+Lighting2 finished.
+Lighting7 - 3 bits
+Lighting7 DNorm Compression time 7.489044666290283.
+FISH SAX Compression time 85.51496481895447.
+FISH - 5 bits
+Lighting7 SAX Compression time 7.323745250701904.
+Lighting7 - 4 bits
+Lighting7 DNorm Compression time 6.653477907180786.
+Lighting7 SAX Compression time 8.096697807312012.
+Lighting7 - 5 bits
+Lighting7 DNorm Compression time 6.640208721160889.
+Lighting7 SAX Compression time 6.204763650894165.
+Lighting7 - 6 bits
+FISH DNorm Compression time 41.54099464416504.
+Lighting7 DNorm Compression time 7.981166839599609.
+Lighting7 SAX Compression time 8.097901105880737.
+Lighting7 - 7 bits
+Lighting7 DNorm Compression time 8.773202180862427.
+Lighting7 SAX Compression time 10.860797882080078.
+Lighting7 finished.
+Meat - 3 bits
+Meat DNorm Compression time 3.252091884613037.
+Meat SAX Compression time 2.091076612472534.
+Meat - 4 bits
+Meat DNorm Compression time 3.8305304050445557.
+FISH SAX Compression time 52.833394289016724.
+Meat SAX Compression time 3.9248056411743164.
+FISH - 6 bits
+Meat - 5 bits
+Meat DNorm Compression time 4.874884605407715.
+Meat SAX Compression time 4.027267694473267.
+Meat - 6 bits
+Meat DNorm Compression time 3.1347062587738037.
+Meat SAX Compression time 2.07580828666687.
+Meat - 7 bits
+Meat DNorm Compression time 4.076606750488281.
+Meat SAX Compression time 4.42354941368103.
+Meat finished.
+FISH DNorm Compression time 40.39915418624878.
+MedicalImages - 3 bits
+FISH SAX Compression time 44.72157549858093.
+FISH - 7 bits
+Earthquakes SAX Compression time 330.9780764579773.
+Earthquakes finished.
+FISH DNorm Compression time 58.56578612327576.
+MiddlePhalanxOutlineAgeGroup - 3 bits
+FISH SAX Compression time 48.396321535110474.
+FISH finished.
+MiddlePhalanxOutlineCorrect - 3 bits
+DistalPhalanxOutlineCorrect SAX Compression time 1615.6435163021088.
+DistalPhalanxOutlineCorrect - 7 bits
+MiddlePhalanxOutlineAgeGroup DNorm Compression time 295.3210937976837.
+CBF SAX Compression time 1925.480237007141.
+CBF - 6 bits
+MiddlePhalanxOutlineAgeGroup SAX Compression time 273.4901967048645.
+MiddlePhalanxOutlineAgeGroup - 4 bits
+MiddlePhalanxOutlineAgeGroup DNorm Compression time 249.70249319076538.
+ECGFiveDays SAX Compression time 1200.5568645000458.
+ECGFiveDays - 4 bits
+MiddlePhalanxOutlineAgeGroup SAX Compression time 255.86503314971924.
+MiddlePhalanxOutlineAgeGroup - 5 bits
+MiddlePhalanxOutlineCorrect DNorm Compression time 1189.834874868393.
+MiddlePhalanxOutlineAgeGroup DNorm Compression time 228.5916600227356.
+MiddlePhalanxOutlineAgeGroup SAX Compression time 243.39909267425537.
+MiddlePhalanxOutlineAgeGroup - 6 bits
+DistalPhalanxOutlineCorrect DNorm Compression time 1517.921095609665.
+MiddlePhalanxOutlineAgeGroup DNorm Compression time 358.0824372768402.
+ECGFiveDays DNorm Compression time 1070.8522267341614.
+MiddlePhalanxOutlineCorrect SAX Compression time 939.8470931053162.
+MiddlePhalanxOutlineCorrect - 4 bits
+CBF DNorm Compression time 1877.6747250556946.
+MiddlePhalanxOutlineAgeGroup SAX Compression time 334.92500591278076.
+MiddlePhalanxOutlineAgeGroup - 7 bits
+ItalyPowerDemand DNorm Compression time 2732.8419625759125.
+MiddlePhalanxOutlineAgeGroup DNorm Compression time 381.5336208343506.
+ECGFiveDays SAX Compression time 946.7671890258789.
+ECGFiveDays - 5 bits
+MiddlePhalanxOutlineAgeGroup SAX Compression time 359.4232506752014.
+MiddlePhalanxOutlineAgeGroup finished.
+MiddlePhalanxTW - 3 bits
+MiddlePhalanxOutlineCorrect DNorm Compression time 954.9165799617767.
+MiddlePhalanxTW DNorm Compression time 245.26491570472717.
+MedicalImages DNorm Compression time 3439.314361810684.
+DistalPhalanxOutlineCorrect SAX Compression time 1762.0083918571472.
+DistalPhalanxOutlineCorrect finished.
+MoteStrain - 3 bits
+MiddlePhalanxTW SAX Compression time 247.6886157989502.
+MiddlePhalanxTW - 4 bits
+ECGFiveDays DNorm Compression time 740.7276141643524.
+MiddlePhalanxTW DNorm Compression time 175.2325427532196.
+MiddlePhalanxTW SAX Compression time 223.94465231895447.
+MiddlePhalanxTW - 5 bits
+MiddlePhalanxOutlineCorrect SAX Compression time 758.2596271038055.
+MiddlePhalanxOutlineCorrect - 5 bits
+MiddlePhalanxTW DNorm Compression time 249.9476191997528.
+CBF SAX Compression time 1979.7941584587097.
+CBF - 7 bits
+ECGFiveDays SAX Compression time 744.4327609539032.
+ECGFiveDays - 6 bits
+MiddlePhalanxTW SAX Compression time 289.1545600891113.
+MiddlePhalanxTW - 6 bits
+ItalyPowerDemand SAX Compression time 2322.586198568344.
+ItalyPowerDemand - 4 bits
+MiddlePhalanxTW DNorm Compression time 297.9812252521515.
+MiddlePhalanxOutlineCorrect DNorm Compression time 1001.2314577102661.
+MiddlePhalanxTW SAX Compression time 326.04398941993713.
+MiddlePhalanxTW - 7 bits
+ECGFiveDays DNorm Compression time 806.4734795093536.
+MiddlePhalanxTW DNorm Compression time 417.0605034828186.
+CBF DNorm Compression time 1693.888617515564.
+MiddlePhalanxTW SAX Compression time 414.4813771247864.
+MiddlePhalanxTW finished.
+OliveOil - 3 bits
+OliveOil DNorm Compression time 1.031585931777954.
+OliveOil SAX Compression time 0.8941020965576172.
+OliveOil - 4 bits
+OliveOil DNorm Compression time 0.9385251998901367.
+OliveOil SAX Compression time 0.9167542457580566.
+OliveOil - 5 bits
+OliveOil DNorm Compression time 0.9269764423370361.
+OliveOil SAX Compression time 0.9118368625640869.
+OliveOil - 6 bits
+OliveOil DNorm Compression time 0.927696704864502.
+OliveOil SAX Compression time 0.9514312744140625.
+OliveOil - 7 bits
+OliveOil DNorm Compression time 0.9659028053283691.
+OliveOil SAX Compression time 1.0778048038482666.
+OliveOil finished.
+OSULeaf - 3 bits
+MiddlePhalanxOutlineCorrect SAX Compression time 1089.4412832260132.
+MiddlePhalanxOutlineCorrect - 6 bits
+OSULeaf DNorm Compression time 118.66830134391785.
+OSULeaf SAX Compression time 103.70002794265747.
+OSULeaf - 4 bits
+MedicalImages SAX Compression time 2843.4582850933075.
+MedicalImages - 4 bits
+ECGFiveDays SAX Compression time 979.457503080368.
+ECGFiveDays - 7 bits
+OSULeaf DNorm Compression time 81.13341474533081.
+OSULeaf SAX Compression time 87.09474563598633.
+OSULeaf - 5 bits
+OSULeaf DNorm Compression time 98.03314805030823.
+OSULeaf SAX Compression time 116.28686666488647.
+OSULeaf - 6 bits
+OSULeaf DNorm Compression time 147.32693934440613.
+OSULeaf SAX Compression time 137.85229468345642.
+OSULeaf - 7 bits
+OSULeaf DNorm Compression time 206.607586145401.
+MiddlePhalanxOutlineCorrect DNorm Compression time 1203.6904203891754.
+OSULeaf SAX Compression time 177.787278175354.
+OSULeaf finished.
+PhalangesOutlinesCorrect - 3 bits
+ItalyPowerDemand DNorm Compression time 2554.548995733261.
+ECGFiveDays DNorm Compression time 1295.369579076767.
+CBF SAX Compression time 1737.5033082962036.
+CBF finished.
+Plane - 3 bits
+Plane DNorm Compression time 12.724549293518066.
+Plane SAX Compression time 11.323986768722534.
+Plane - 4 bits
+Plane DNorm Compression time 11.06040644645691.
+Plane SAX Compression time 11.395662069320679.
+Plane - 5 bits
+Plane DNorm Compression time 11.563398838043213.
+Plane SAX Compression time 12.356404066085815.
+Plane - 6 bits
+Plane DNorm Compression time 14.076139450073242.
+Plane SAX Compression time 13.676187753677368.
+Plane - 7 bits
+Plane DNorm Compression time 17.227539777755737.
+Plane SAX Compression time 15.507341623306274.
+Plane finished.
+ProximalPhalanxOutlineAgeGroup - 3 bits
+MoteStrain DNorm Compression time 4726.877292394638.
+ProximalPhalanxOutlineAgeGroup DNorm Compression time 363.05761337280273.
+MedicalImages DNorm Compression time 2128.559322834015.
+ProximalPhalanxOutlineAgeGroup SAX Compression time 271.44974756240845.
+ProximalPhalanxOutlineAgeGroup - 4 bits
+MiddlePhalanxOutlineCorrect SAX Compression time 1386.9141960144043.
+MiddlePhalanxOutlineCorrect - 7 bits
+ProximalPhalanxOutlineAgeGroup DNorm Compression time 284.7756304740906.
+ECGFiveDays SAX Compression time 1431.266782283783.
+ECGFiveDays finished.
+ProximalPhalanxOutlineCorrect - 3 bits
+ProximalPhalanxOutlineAgeGroup SAX Compression time 283.33758521080017.
+ProximalPhalanxOutlineAgeGroup - 5 bits
+ProximalPhalanxOutlineAgeGroup DNorm Compression time 355.24470949172974.
+ProximalPhalanxOutlineAgeGroup SAX Compression time 337.7004072666168.
+ProximalPhalanxOutlineAgeGroup - 6 bits
+ItalyPowerDemand SAX Compression time 2632.05633020401.
+ItalyPowerDemand - 5 bits
+ProximalPhalanxOutlineAgeGroup DNorm Compression time 379.25129771232605.
+MiddlePhalanxOutlineCorrect DNorm Compression time 1485.7107629776.
+ProximalPhalanxOutlineCorrect DNorm Compression time 1191.7878251075745.
+MedicalImages SAX Compression time 2049.1546635627747.
+MedicalImages - 5 bits
+ProximalPhalanxOutlineAgeGroup SAX Compression time 446.6019413471222.
+ProximalPhalanxOutlineAgeGroup - 7 bits
+ProximalPhalanxOutlineAgeGroup DNorm Compression time 485.95818185806274.
+ProximalPhalanxOutlineCorrect SAX Compression time 950.3835864067078.
+ProximalPhalanxOutlineCorrect - 4 bits
+ProximalPhalanxOutlineAgeGroup SAX Compression time 420.64183926582336.
+ProximalPhalanxOutlineAgeGroup finished.
+ProximalPhalanxTW - 3 bits
+MiddlePhalanxOutlineCorrect SAX Compression time 1677.4867527484894.
+MiddlePhalanxOutlineCorrect finished.
+ShapeletSim - 3 bits
+ProximalPhalanxTW DNorm Compression time 387.3595097064972.
+ShapeletSim DNorm Compression time 16.45920705795288.
+ShapeletSim SAX Compression time 10.564127683639526.
+ShapeletSim - 4 bits
+ShapeletSim DNorm Compression time 12.61821961402893.
+ShapeletSim SAX Compression time 13.77464747428894.
+ShapeletSim - 5 bits
+ShapeletSim DNorm Compression time 14.87842321395874.
+ShapeletSim SAX Compression time 19.10889720916748.
+ShapeletSim - 6 bits
+ShapeletSim DNorm Compression time 18.42888331413269.
+ShapeletSim SAX Compression time 24.008564710617065.
+ShapeletSim - 7 bits
+ShapeletSim DNorm Compression time 25.140441179275513.
+ProximalPhalanxOutlineCorrect DNorm Compression time 868.1950159072876.
+ShapeletSim SAX Compression time 27.362359046936035.
+ShapeletSim finished.
+SonyAIBORobotSurface - 3 bits
+ProximalPhalanxTW SAX Compression time 323.37968850135803.
+ProximalPhalanxTW - 4 bits
+SonyAIBORobotSurface DNorm Compression time 301.15134358406067.
+MoteStrain SAX Compression time 4169.461790323257.
+MoteStrain - 4 bits
+ProximalPhalanxTW DNorm Compression time 331.6595895290375.
+SonyAIBORobotSurface SAX Compression time 228.65668201446533.
+SonyAIBORobotSurface - 4 bits
+MedicalImages DNorm Compression time 2165.6711933612823.
+ProximalPhalanxTW SAX Compression time 266.14009737968445.
+ProximalPhalanxTW - 5 bits
+SonyAIBORobotSurface DNorm Compression time 295.25771856307983.
+ItalyPowerDemand DNorm Compression time 2967.849866628647.
+ProximalPhalanxOutlineCorrect SAX Compression time 999.1640195846558.
+ProximalPhalanxOutlineCorrect - 5 bits
+ProximalPhalanxTW DNorm Compression time 281.75694704055786.
+SonyAIBORobotSurface SAX Compression time 346.5752446651459.
+SonyAIBORobotSurface - 5 bits
+ProximalPhalanxTW SAX Compression time 320.32882046699524.
+ProximalPhalanxTW - 6 bits
+SonyAIBORobotSurface DNorm Compression time 410.43516850471497.
+ProximalPhalanxTW DNorm Compression time 396.4259479045868.
+SonyAIBORobotSurface SAX Compression time 383.89596152305603.
+SonyAIBORobotSurface - 6 bits
+ProximalPhalanxOutlineCorrect DNorm Compression time 1015.2535035610199.
+ProximalPhalanxTW SAX Compression time 352.7278664112091.
+ProximalPhalanxTW - 7 bits
+ProximalPhalanxTW DNorm Compression time 411.7554421424866.
+SonyAIBORobotSurface DNorm Compression time 603.0522246360779.
+MedicalImages SAX Compression time 2348.0182721614838.
+MedicalImages - 6 bits
+ProximalPhalanxTW SAX Compression time 496.9009873867035.
+ProximalPhalanxTW finished.
+SonyAIBORobotSurfaceII - 3 bits
+ProximalPhalanxOutlineCorrect SAX Compression time 1068.5337114334106.
+ProximalPhalanxOutlineCorrect - 6 bits
+SonyAIBORobotSurface SAX Compression time 596.2210757732391.
+SonyAIBORobotSurface - 7 bits
+SonyAIBORobotSurface DNorm Compression time 569.470942735672.
+MoteStrain DNorm Compression time 3689.741451025009.
+ItalyPowerDemand SAX Compression time 3197.0057232379913.
+ItalyPowerDemand - 6 bits
+ProximalPhalanxOutlineCorrect DNorm Compression time 1126.0570139884949.
+SonyAIBORobotSurface SAX Compression time 547.7443091869354.
+SonyAIBORobotSurface finished.
+Strawberry - 3 bits
+SonyAIBORobotSurfaceII DNorm Compression time 1322.2750082015991.
+SonyAIBORobotSurfaceII SAX Compression time 1104.3083522319794.
+SonyAIBORobotSurfaceII - 4 bits
+ProximalPhalanxOutlineCorrect SAX Compression time 1450.644297361374.
+ProximalPhalanxOutlineCorrect - 7 bits
+MedicalImages DNorm Compression time 2869.816549062729.
+Strawberry DNorm Compression time 1869.442530632019.
+SonyAIBORobotSurfaceII DNorm Compression time 1129.1461141109467.
+MoteStrain SAX Compression time 2887.1207661628723.
+MoteStrain - 5 bits
+ProximalPhalanxOutlineCorrect DNorm Compression time 1458.0104899406433.
+ItalyPowerDemand DNorm Compression time 3248.662651538849.
+Strawberry SAX Compression time 1448.7623233795166.
+Strawberry - 4 bits
+SonyAIBORobotSurfaceII SAX Compression time 1241.265037059784.
+SonyAIBORobotSurfaceII - 5 bits
+ProximalPhalanxOutlineCorrect SAX Compression time 1645.4609065055847.
+ProximalPhalanxOutlineCorrect finished.
+SwedishLeaf - 3 bits
+Strawberry DNorm Compression time 1156.8568036556244.
+MedicalImages SAX Compression time 3152.480698823929.
+MedicalImages - 7 bits
+SonyAIBORobotSurfaceII DNorm Compression time 1525.1722540855408.
+MoteStrain DNorm Compression time 2799.991123199463.
+Strawberry SAX Compression time 1022.9146757125854.
+Strawberry - 5 bits
+ItalyPowerDemand SAX Compression time 3327.620121240616.
+ItalyPowerDemand - 7 bits
+SwedishLeaf DNorm Compression time 2099.0495088100433.
+Strawberry DNorm Compression time 1070.469581604004.
+SonyAIBORobotSurfaceII SAX Compression time 1877.7059271335602.
+SonyAIBORobotSurfaceII - 6 bits
+Strawberry SAX Compression time 1074.362545967102.
+Strawberry - 6 bits
+SwedishLeaf SAX Compression time 1386.8337788581848.
+SwedishLeaf - 4 bits
+MoteStrain SAX Compression time 2749.280325651169.
+MoteStrain - 6 bits
+MedicalImages DNorm Compression time 3638.4527671337128.
+Strawberry DNorm Compression time 1231.5124101638794.
+SwedishLeaf DNorm Compression time 1136.3390889167786.
+SonyAIBORobotSurfaceII DNorm Compression time 2256.6290698051453.
+ItalyPowerDemand DNorm Compression time 3193.1317496299744.
+Strawberry SAX Compression time 1387.8965153694153.
+Strawberry - 7 bits
+SwedishLeaf SAX Compression time 1249.767359495163.
+SwedishLeaf - 5 bits
+SonyAIBORobotSurfaceII SAX Compression time 2059.202235221863.
+SonyAIBORobotSurfaceII - 7 bits
+MoteStrain DNorm Compression time 3304.245000600815.
+SwedishLeaf DNorm Compression time 1325.9651863574982.
+MedicalImages SAX Compression time 3594.8630731105804.
+MedicalImages finished.
+synthetic_control - 3 bits
+Strawberry DNorm Compression time 1628.2918927669525.
+synthetic_control DNorm Compression time 459.764173746109.
+ItalyPowerDemand SAX Compression time 2905.6304128170013.
+ItalyPowerDemand finished.
+ToeSegmentation1 - 3 bits
+ToeSegmentation1 DNorm Compression time 31.892263889312744.
+ToeSegmentation1 SAX Compression time 29.61840534210205.
+ToeSegmentation1 - 4 bits
+ToeSegmentation1 DNorm Compression time 28.372446298599243.
+ToeSegmentation1 SAX Compression time 22.924985647201538.
+ToeSegmentation1 - 5 bits
+ToeSegmentation1 DNorm Compression time 19.60996437072754.
+ToeSegmentation1 SAX Compression time 19.632137775421143.
+ToeSegmentation1 - 6 bits
+ToeSegmentation1 DNorm Compression time 38.70448565483093.
+ToeSegmentation1 SAX Compression time 24.36665105819702.
+ToeSegmentation1 - 7 bits
+ToeSegmentation1 DNorm Compression time 45.240538120269775.
+ToeSegmentation1 SAX Compression time 54.71504759788513.
+ToeSegmentation1 finished.
+synthetic_control SAX Compression time 475.6507911682129.
+synthetic_control - 4 bits
+ToeSegmentation2 - 3 bits
+ToeSegmentation2 DNorm Compression time 9.362971544265747.
+ToeSegmentation2 SAX Compression time 4.0494065284729.
+ToeSegmentation2 - 4 bits
+ToeSegmentation2 DNorm Compression time 3.9242968559265137.
+ToeSegmentation2 SAX Compression time 4.291441202163696.
+ToeSegmentation2 - 5 bits
+ToeSegmentation2 DNorm Compression time 8.804000616073608.
+ToeSegmentation2 SAX Compression time 10.6253502368927.
+ToeSegmentation2 - 6 bits
+ToeSegmentation2 DNorm Compression time 12.090183734893799.
+ToeSegmentation2 SAX Compression time 12.866991996765137.
+ToeSegmentation2 - 7 bits
+ToeSegmentation2 DNorm Compression time 13.362310409545898.
+ToeSegmentation2 SAX Compression time 16.224454164505005.
+ToeSegmentation2 finished.
+Trace - 3 bits
+Trace DNorm Compression time 18.43010401725769.
+Trace SAX Compression time 20.517810344696045.
+Trace - 4 bits
+Trace DNorm Compression time 23.067895650863647.
+Trace SAX Compression time 15.609288454055786.
+Trace - 5 bits
+Trace DNorm Compression time 10.732521533966064.
+Trace SAX Compression time 9.18261981010437.
+Trace - 6 bits
+Trace DNorm Compression time 10.476245164871216.
+Trace SAX Compression time 11.108911275863647.
+Trace - 7 bits
+Trace DNorm Compression time 10.439572095870972.
+Trace SAX Compression time 12.10274887084961.
+Trace finished.
+TwoLeadECG - 3 bits
+synthetic_control DNorm Compression time 439.7259690761566.
+SonyAIBORobotSurfaceII DNorm Compression time 2155.9402809143066.
+SwedishLeaf SAX Compression time 1956.471930027008.
+SwedishLeaf - 6 bits
+Strawberry SAX Compression time 1772.4691143035889.
+Strawberry finished.
+Wine - 3 bits
+Wine DNorm Compression time 3.4792966842651367.
+Wine SAX Compression time 2.6001484394073486.
+Wine - 4 bits
+Wine DNorm Compression time 2.9579017162323.
+Wine SAX Compression time 3.117830276489258.
+Wine - 5 bits
+Wine DNorm Compression time 2.9701223373413086.
+Wine SAX Compression time 3.4589526653289795.
+Wine - 6 bits
+Wine DNorm Compression time 3.7244248390197754.
+Wine SAX Compression time 2.9953718185424805.
+Wine - 7 bits
+Wine DNorm Compression time 3.7432239055633545.
+Wine SAX Compression time 4.045202016830444.
+Wine finished.
+WordsSynonyms - 3 bits
+synthetic_control SAX Compression time 560.4226310253143.
+synthetic_control - 5 bits
+synthetic_control DNorm Compression time 520.9096610546112.
+synthetic_control SAX Compression time 531.5419867038727.
+synthetic_control - 6 bits
+WordsSynonyms DNorm Compression time 1338.7339084148407.
+synthetic_control DNorm Compression time 388.147136926651.
+SonyAIBORobotSurfaceII SAX Compression time 2043.5158202648163.
+SonyAIBORobotSurfaceII finished.
+MoteStrain SAX Compression time 4017.588110923767.
+MoteStrain - 7 bits
+Worms - 3 bits
+Worms DNorm Compression time 44.66604423522949.
+Worms SAX Compression time 27.490506649017334.
+Worms - 4 bits
+Worms DNorm Compression time 25.25267267227173.
+Worms SAX Compression time 30.74868154525757.
+Worms - 5 bits
+Worms DNorm Compression time 31.253265857696533.
+Worms SAX Compression time 37.873892068862915.
+Worms - 6 bits
+synthetic_control SAX Compression time 442.1735255718231.
+synthetic_control - 7 bits
+Worms DNorm Compression time 41.364755392074585.
+Worms SAX Compression time 42.76233649253845.
+Worms - 7 bits
+Worms DNorm Compression time 49.3598096370697.
+Worms SAX Compression time 39.59320402145386.
+Worms finished.
+WormsTwoClass - 3 bits
+SwedishLeaf DNorm Compression time 2301.8323147296906.
+WormsTwoClass DNorm Compression time 35.63111615180969.
+WormsTwoClass SAX Compression time 34.200095653533936.
+WormsTwoClass - 4 bits
+WordsSynonyms SAX Compression time 879.786203622818.
+WordsSynonyms - 4 bits
+WormsTwoClass DNorm Compression time 31.497991800308228.
+WormsTwoClass SAX Compression time 33.07113742828369.
+WormsTwoClass - 5 bits
+TwoLeadECG DNorm Compression time 2993.3254351615906.
+WormsTwoClass DNorm Compression time 37.28165030479431.
+WormsTwoClass SAX Compression time 27.98520302772522.
+WormsTwoClass - 6 bits
+synthetic_control DNorm Compression time 425.7369306087494.
+WormsTwoClass DNorm Compression time 35.66631364822388.
+WormsTwoClass SAX Compression time 34.28035068511963.
+WormsTwoClass - 7 bits
+WormsTwoClass DNorm Compression time 50.050381898880005.
+WormsTwoClass SAX Compression time 58.39622616767883.
+WormsTwoClass finished.
+50words - 3 bits
+synthetic_control SAX Compression time 386.6156015396118.
+synthetic_control finished.
+WordsSynonyms DNorm Compression time 705.8602740764618.
+50words DNorm Compression time 911.288740158081.
+WordsSynonyms SAX Compression time 636.1054756641388.
+WordsSynonyms - 5 bits
+50words SAX Compression time 622.331306219101.
+50words - 4 bits
+WordsSynonyms DNorm Compression time 675.7460768222809.
+SwedishLeaf SAX Compression time 2298.0607526302338.
+SwedishLeaf - 7 bits
+TwoLeadECG SAX Compression time 2233.4344539642334.
+TwoLeadECG - 4 bits
+50words DNorm Compression time 541.6068956851959.
+WordsSynonyms SAX Compression time 947.7040102481842.
+WordsSynonyms - 6 bits
+50words SAX Compression time 728.534654378891.
+50words - 5 bits
+MoteStrain DNorm Compression time 4172.972409486771.
+50words DNorm Compression time 701.5223171710968.
+TwoLeadECG DNorm Compression time 1791.7078998088837.
+WordsSynonyms DNorm Compression time 1148.3761157989502.
+SwedishLeaf DNorm Compression time 2612.218594312668.
+50words SAX Compression time 1133.0838203430176.
+50words - 6 bits
+WordsSynonyms SAX Compression time 1370.8794729709625.
+WordsSynonyms - 7 bits
+TwoLeadECG SAX Compression time 1611.003226518631.
+TwoLeadECG - 5 bits
+50words DNorm Compression time 1201.3862707614899.
+WordsSynonyms DNorm Compression time 1466.017088651657.
+TwoLeadECG DNorm Compression time 1590.6055765151978.
+50words SAX Compression time 1514.9206311702728.
+50words - 7 bits
+SwedishLeaf SAX Compression time 2897.201542854309.
+SwedishLeaf finished.
+MoteStrain SAX Compression time 4243.338562965393.
+MoteStrain finished.
+WordsSynonyms SAX Compression time 1331.2687764167786.
+WordsSynonyms finished.
+TwoLeadECG SAX Compression time 1380.0290446281433.
+TwoLeadECG - 6 bits
+50words DNorm Compression time 992.9256694316864.
+PhalangesOutlinesCorrect DNorm Compression time 34191.406997442245.
+50words SAX Compression time 963.1415231227875.
+50words finished.
+TwoLeadECG DNorm Compression time 1250.2616112232208.
+TwoLeadECG SAX Compression time 1406.6570255756378.
+TwoLeadECG - 7 bits
+TwoLeadECG DNorm Compression time 1566.351851940155.

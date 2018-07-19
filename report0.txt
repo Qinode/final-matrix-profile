@@ -1,0 +1,96 @@
+ArrowHead
+3 bits
+DNorm Compression time 8.037220001220703.
+SAX Compression time 6.0756731033325195.
+4 bits
+DNorm Compression time 6.098791122436523.
+SAX Compression time 5.4780662059783936.
+5 bits
+DNorm Compression time 5.9911699295043945.
+SAX Compression time 6.507608413696289.
+6 bits
+DNorm Compression time 7.750716686248779.
+SAX Compression time 7.877871036529541.
+7 bits
+DNorm Compression time 8.795374393463135.
+SAX Compression time 10.082882642745972.
+Adiac
+3 bits
+DNorm Compression time 463.89346861839294.
+SAX Compression time 331.72443652153015.
+4 bits
+DNorm Compression time 296.2296760082245.
+SAX Compression time 272.64879274368286.
+5 bits
+DNorm Compression time 268.46230459213257.
+SAX Compression time 291.2581000328064.
+6 bits
+DNorm Compression time 336.9712598323822.
+SAX Compression time 404.29820942878723.
+7 bits
+DNorm Compression time 439.85960841178894.
+SAX Compression time 483.01932168006897.
+Beef
+3 bits
+DNorm Compression time 0.4298982620239258.
+SAX Compression time 0.4181497097015381.
+4 bits
+DNorm Compression time 0.4013049602508545.
+SAX Compression time 0.4137687683105469.
+5 bits
+DNorm Compression time 0.44762134552001953.
+SAX Compression time 0.43642592430114746.
+6 bits
+DNorm Compression time 0.44212841987609863.
+SAX Compression time 0.4895203113555908.
+7 bits
+DNorm Compression time 0.4940812587738037.
+SAX Compression time 0.5030150413513184.
+BeetleFly
+3 bits
+DNorm Compression time 0.2145397663116455.
+SAX Compression time 0.2025291919708252.
+4 bits
+DNorm Compression time 0.21763062477111816.
+SAX Compression time 0.2357175350189209.
+5 bits
+DNorm Compression time 0.24732565879821777.
+SAX Compression time 0.2507166862487793.
+6 bits
+DNorm Compression time 0.2549161911010742.
+SAX Compression time 0.24735736846923828.
+7 bits
+DNorm Compression time 0.2424168586730957.
+SAX Compression time 0.24871611595153809.
+BirdChicken
+3 bits
+DNorm Compression time 0.22052383422851562.
+SAX Compression time 0.20678424835205078.
+4 bits
+DNorm Compression time 0.21322393417358398.
+SAX Compression time 0.21574115753173828.
+5 bits
+DNorm Compression time 0.21208786964416504.
+SAX Compression time 0.21150493621826172.
+6 bits
+DNorm Compression time 0.22637343406677246.
+SAX Compression time 0.23363709449768066.
+7 bits
+DNorm Compression time 0.22893333435058594.
+SAX Compression time 0.2582831382751465.
+Car
+3 bits
+DNorm Compression time 2.1864538192749023.
+SAX Compression time 1.71771240234375.
+4 bits
+DNorm Compression time 1.806654930114746.
+SAX Compression time 1.6742775440216064.
+5 bits
+DNorm Compression time 1.629744291305542.
+SAX Compression time 1.7918000221252441.
+6 bits
+DNorm Compression time 1.9084460735321045.
+SAX Compression time 1.9843790531158447.
+7 bits
+DNorm Compression time 2.209299087524414.
+SAX Compression time 2.220637321472168.

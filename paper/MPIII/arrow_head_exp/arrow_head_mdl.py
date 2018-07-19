@@ -41,7 +41,7 @@ if __name__ == '__main__':
     interval = sax_discretization_pre(data, bits)
 
     c, h, compress_table, idx_bitsave = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
-    s_c, s_h, s_compress_table, s_idx_bitsave = sax_subsequence_selection(data, interval, mp, mpi, window_size, 10, bits)
+    s_c, s_h, s_compress_table, s_idx_bitsave = sax_subsequence_selection(data, interval, t_min, t_max, mp, mpi, window_size, 10, bits)
 
     idx_bitsave = np.array(idx_bitsave)
     s_idx_bitsave = np.array(s_idx_bitsave)

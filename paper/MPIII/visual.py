@@ -16,6 +16,8 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
+        # print('Bits: {}.'.format(bit_cost))
+
         candidates, candidate_idxs = pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums)
 
         if not candidate_idxs:
@@ -59,7 +61,7 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
     return C_idx, H_idx, compress_table, idx_bitsave
 
 
-def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums, bits):
+def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, window_size, nums, bits):
     max_salient = np.around(time_series.shape[0] / window_size)
     mp, mpi = mp.copy(), mpi.copy()
 
@@ -71,12 +73,13 @@ def sax_subsequence_selection(time_series, interval, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
-        candidates, candidate_idxs = sax_pick_candidates(time_series, interval, window_size, mp, nums)
+        # print('SAX Bits: {}.'.format(bit_cost))
+        candidates, candidate_idxs = sax_pick_candidates(time_series, interval, t_min, t_max, window_size, mp, nums)
 
         if not candidate_idxs:
             break
 
-        best_cand, cand_idx, cand_type, compress_by = sax_pick_best_candidates(time_series, interval, candidates, candidate_idxs, H, bits, mpi)
+        best_cand, cand_idx, cand_type, compress_by = sax_pick_best_candidates(time_series, interval, t_min, t_max, candidates, candidate_idxs, H, bits, mpi)
 
         exc_start = max(0, cand_idx - (window_size // 2))
         exc_end = min(cand_idx + (window_size // 2), mp.shape[0])
