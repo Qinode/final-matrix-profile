@@ -36,7 +36,7 @@ if __name__ == '__main__':
     valid_idx_arr = []
     s_valid_idx_arr = []
 
-    bits = 5
+    bits = 6
     print('{} bits'.format(bits))
     interval = sax_discretization_pre(data, bits)
 

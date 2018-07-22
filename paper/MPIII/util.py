@@ -14,12 +14,19 @@ def discretization_pre(time_series, windows_size):
     return min, max
 
 
-def sax_discretization_pre(time_series, bits):
+def sax_discretization_pre(time_series, bits, bounded=False):
     z_time_series = (time_series - np.mean(time_series)) / np.std(time_series)
     min, max = np.min(z_time_series), np.max(z_time_series)
     unit_z_time_series = (z_time_series - min) / (max - min)
     mean, std = np.mean(unit_z_time_series), np.std(unit_z_time_series)
+
     interval = scipy.stats.norm.ppf(np.arange(2 ** bits)/(2 ** bits), mean, std)
+
+    if bounded:
+        upper = mean + 3 * std
+        lower = mean - 3 * std
+        interval = (interval - lower)/(upper - lower)
+
     return interval
 
 
