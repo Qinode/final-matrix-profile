@@ -1,4 +1,5 @@
 from paper.MPIII.util import *
+from random import shuffle
 import ast
 import os
 import numpy as np
@@ -81,14 +82,14 @@ if __name__ == '__main__':
                 'WormsTwoClass': 5
                 }
 
-
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, '../eval-fig')
+    eval_path = os.path.join(path, '../eval-fig/normal')
     dir_name = os.listdir(eval_path)
-    for d in dir_name:
+    shuffle(dir_name)
+    for d in dir_name[:10]:
         dataset_name = os.path.basename(d)
         if dataset_name in gaussian:
-            data_path = os.path.join(path, '../eval/{}.mat'.format(dataset_name))
+            data_path = os.path.join(path, '../eval_data/{}.mat'.format(dataset_name))
             mat_path = os.path.join(eval_path, d, 'saved-data', 'gaussian-{}bits.mat'.format(gaussian[d]))
             component_analysis(dataset_name, gaussian[d], data_path, mat_path)
         else:

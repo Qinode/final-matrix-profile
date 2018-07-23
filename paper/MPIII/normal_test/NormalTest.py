@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from random import shuffle
 import scipy.io
 import scipy.stats
 import statsmodels.api as sm
@@ -39,9 +40,10 @@ if __name__ == '__main__':
 
 
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, '../eval')
+    eval_path = os.path.join(path, '../eval_data')
     data = os.listdir(eval_path)
-    for d in data:
+    shuffle(data)
+    for d in data[:10]:
         print(d)
         if d[:-4] in gaussian:
             normal_test(os.path.join(eval_path, d), d[:-4], True)
