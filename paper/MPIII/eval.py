@@ -1,13 +1,14 @@
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
+import numpy as np
 import time
 import datetime
 import scipy.io
 import os
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from paper.MPIII.visual import *
+
+from paper.MPIII.visual import subsequence_selection, sax_subsequence_selection
+from paper.MPIII.util import *
+
 
 
 def get_timestampe():
@@ -96,11 +97,12 @@ def run(dataset, data_name, save, save_path, bounded=False):
         precisions, recalls = get_f(valid_idx, tp, p, window_size)
         s_precisions, s_recalls = get_f(s_valid_idx, tp, p, window_size)
 
-        scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
-                         {'compressible': c, 'hypothesis': h, 'compress_table': compress_table, 'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls})
+        if save:
+            scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
+                             {'compressible': c, 'hypothesis': h, 'compress_table': compress_table, 'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls})
 
-        scipy.io.savemat('{}/saved-data/gaussian-{}bits'.format(save_path, bits),
-                         {'compressible': s_c, 'hypothesis': s_h, 'compress_table': s_compress_table, 'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls})
+            scipy.io.savemat('{}/saved-data/gaussian-{}bits'.format(save_path, bits),
+                             {'compressible': s_c, 'hypothesis': s_h, 'compress_table': s_compress_table, 'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls})
 
         plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
         plt.plot(s_idx_bitsave[:, 1], label='Gaussian Norm', color='C1')
@@ -112,8 +114,9 @@ def run(dataset, data_name, save, save_path, bounded=False):
         plt.xlabel('Number of Components')
         if save:
             plt.savefig('{}/bits/{} bits.png'.format(save_path, bits))
+        else:
+            plt.show()
         plt.clf()
-        # plt.show()
 
         plt.plot(recalls, precisions, label='DNorm', color='C0')
         plt.plot(s_recalls, s_precisions, label='Gaussian Norm', color='C1')
@@ -124,8 +127,9 @@ def run(dataset, data_name, save, save_path, bounded=False):
         plt.xlabel('Recall')
         if save:
             plt.savefig('{}/recall-precision/{} bits.png'.format(save_path, bits))
+        else:
+            plt.show()
         plt.clf()
-        # plt.show()
 
     plt.plot(x_axis, valid_idx_arr, label='DNorm')
     plt.plot(x_axis, s_valid_idx_arr, label='Gaussian Norm')
@@ -140,6 +144,14 @@ def run(dataset, data_name, save, save_path, bounded=False):
 
 
 if __name__ == '__main__':
+    import matplotlib.pyplot as plt
+
+    run('./eval/Plane', 'Plane', False, '', bounded=False)
+
+if __name__ == '__main__':
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
 
     path = os.path.dirname(os.path.abspath(__file__))
     eval_path = os.path.join(path, 'eval')
