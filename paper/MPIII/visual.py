@@ -1,8 +1,8 @@
-import pickle
-import numpy as np
-from src.matrix_profile.matrixprofile import stomp
+
 from paper.MPIII.util import *
 
+import numpy as np
+import matplotlib.pyplot as plt
 
 def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums, bits):
     max_salient = np.around(time_series.shape[0] / window_size)
@@ -116,41 +116,37 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
     return C_idx, H_idx, compress_table, idx_bitsave
 
 
-# kolhs data
 if __name__ == "__main__":
-    import pickle
     import scipy.io
-    from src.matrix_profile.matrixprofile import stomp
-    window_size = 78
+    from paper.MPIII.eval import get_f, f1
 
-    bits = 4
-    data = scipy.io.loadmat('../MPVII/data/kolhs.mat')['kolhs']
-    data = data[:, 1].astype(np.float)
-    data = data[~np.isnan(data)]
+    bits = range(3, 8)
+    data = scipy.io.loadmat('eval/Plane')
 
-    t_min, t_max = discretization_pre(data, window_size)
-    mp, mpi = stomp(data, data, window_size, True)
+    ts = data['data']
+    window_size = int(data['subLen'][0][0])
+    mp = data['matrixProfile']
+    mpi = data['profileIndex'] - 1
+    tp = data['labIdx'] - 1
 
-    # scipy.io.savemat('data/106_mp.mat', {'mp': mp})
-    # scipy.io.savemat('data/106_mpi.mat', {'mpi': mpi})
+    t_min, t_max = discretization_pre(ts, window_size)
 
-    c, h = subsequence_selection(data, t_min, t_max, mp.copy(), mpi.copy(), window_size, 10, bits)
+    for b in [5]:
+        c, h, compress_table, idx_bitsave = subsequence_selection(ts, t_min, t_max, mp, mpi, window_size, 10, b)
+        idx_bitsave = np.array(idx_bitsave)
 
+        cut_off = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
 
-# if __name__ == "__main__":
-#     import pickle
-#     import scipy.io
-#     from src.matrix_profile.matrixprofile import stomp
-#     window_size = 120
-#
-#     bits = 4
-#     data = scipy.io.loadmat('data/data.mat')['data']
-#     data = data[~np.isnan(data)]
-#
-#     t_min, t_max = discretization_pre(data, window_size)
-#     mp, mpi = stomp(data, data, window_size, True)
-#
-    # scipy.io.savemat('data/106_mp.mat', {'mp': mp})
-    # scipy.io.savemat('data/106_mpi.mat', {'mpi': mpi})
+        if cut_off.shape[0] == 0:
+            cut_off = idx_bitsave[:, 1].shape[0]
+        else:
+            cut_off = cut_off[0]
 
-#    c, h = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
+        valid_idx = idx_bitsave[:, 0][:cut_off]
+        precisions, recalls = get_f(valid_idx, tp, 0.2, window_size)
+
+        plt.plot(recalls, precisions)
+        plt.title('{} bits compression\n DNorm {}'.format(b, f1(precisions, recalls)))
+        plt.ylabel('Precision')
+        plt.xlabel('Recall')
+        plt.show()

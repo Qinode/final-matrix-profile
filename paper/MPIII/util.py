@@ -96,6 +96,9 @@ def pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums):
 
 # 0 for hypothesis, 1 for compressible
 def pick_best_candidates(time_sereis, t_min, t_max, candidates, candidate_idx, hypothesis, bits, mpi):
+
+    threshold_factor = 0.
+
     candidates_table = np.full(((len(candidate_idx), 2)), -np.inf)
 
     for i in range(len(candidates)):
@@ -114,7 +117,7 @@ def pick_best_candidates(time_sereis, t_min, t_max, candidates, candidate_idx, h
 
         best_com = candidates[i].shape[0] * bits - best_com
 
-        if bit_save_hypo > best_com:
+        if bit_save_hypo > (best_com * (1 + threshold_factor)):
             candidates_table[i][0] = bit_save_hypo
             candidates_table[i][1] = 0
         else:
