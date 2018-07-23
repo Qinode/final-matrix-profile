@@ -16,7 +16,6 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
-        # print('Bits: {}.'.format(bit_cost))
 
         candidates, candidate_idxs = pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums)
 

@@ -5,6 +5,7 @@ import datetime
 import scipy.io
 import os
 import matplotlib
+import json
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from paper.MPIII.visual import *
@@ -97,10 +98,10 @@ def run(dataset, data_name, save, save_path, bounded=False):
         s_precisions, s_recalls = get_f(s_valid_idx, tp, p, window_size)
 
         scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
-                         {'compressible': c, 'hypothesis': h, 'compress_table': compress_table, 'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls})
+                         {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table), 'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls})
 
         scipy.io.savemat('{}/saved-data/gaussian-{}bits'.format(save_path, bits),
-                         {'compressible': s_c, 'hypothesis': s_h, 'compress_table': s_compress_table, 'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls})
+                         {'compressible': s_c, 'hypothesis': s_h, 'compress_table': str(s_compress_table), 'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls})
 
         plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
         plt.plot(s_idx_bitsave[:, 1], label='Gaussian Norm', color='C1')
@@ -155,7 +156,7 @@ if __name__ == '__main__':
     for d in data:
         data_name = d[:-4]
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval-fig-3sigma', data_name)
+        fig_path = os.path.join(path, 'eval-fig', data_name)
 
         for dir_name in sub_dirs:
             os.makedirs(os.path.join(fig_path, dir_name))
@@ -163,7 +164,7 @@ if __name__ == '__main__':
         parmas.append((data_path, data_name, fig_path))
 
     for p in parmas:
-        futures.append(pool.submit(run, p[0], p[1], True, p[2], bounded=True))
+        futures.append(pool.submit(run, p[0], p[1], True, p[2], bounded=False))
 
     for f in as_completed(futures):
         print(f.result())
