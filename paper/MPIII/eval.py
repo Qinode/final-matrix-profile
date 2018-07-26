@@ -142,10 +142,10 @@ def run(dataset, data_name, save, save_path, bounded=False):
     return '[{}] {} finished.'.format(get_timestampe(), data_name)
 
 
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-
-    run('./eval/Plane', 'Plane', False, '', bounded=False)
+# if __name__ == '__main__':
+#     import matplotlib.pyplot as plt
+#
+#     run('./eval_data/Plane', 'Plane', False, '', bounded=False)
 
 if __name__ == '__main__':
     import matplotlib
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, 'eval')
+    eval_path = os.path.join(path, 'eval_data')
     data = os.listdir(eval_path)
 
     sub_dirs = ['recall-precision', 'bits', 'components', 'saved-data']
@@ -166,7 +166,7 @@ if __name__ == '__main__':
     for d in data:
         data_name = d[:-4]
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval-fig', data_name)
+        fig_path = os.path.join(path, 'eval_fig/fixed_regularization', data_name)
 
         for dir_name in sub_dirs:
             os.makedirs(os.path.join(fig_path, dir_name))

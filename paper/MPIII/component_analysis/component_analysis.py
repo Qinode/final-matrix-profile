@@ -41,52 +41,53 @@ def component_analysis(dataset_name, bits, data_path, mat_path):
 
     assert(valid_h.shape[0] + valid_c.shape[0] == valid_idx.shape[0])
 
-    for i, h in enumerate(valid_h):
-        compressibles = compress_table[h]
+    for i in range(valid_idx.shape[0]):
+        if idx_bitsave[i, 2] == 0:
+            compressibles = compress_table[int(valid_idx[i])]
 
-        hypothesis = subsequence_process(data[i: i+window_size], min, max)
-        plt.plot(hypothesis, color='C1', label='Hypothesis')
+            hypothesis = subsequence_process(data[int(valid_idx[i]): int(valid_idx[i])+window_size], min, max)
+            plt.plot(hypothesis, color='C1', label='Hypothesis')
 
-        for c in compressibles:
-            if c in valid_c:
-                a_compressible = subsequence_process(data[c: c+window_size], min, max)
-                plt.plot(a_compressible, color='C2', label='Compressible')
+            for c in compressibles:
+                if c in valid_c:
+                    a_compressible = subsequence_process(data[c: c+window_size], min, max)
+                    plt.plot(a_compressible, color='C2', label='Compressible')
 
-        for x in interval[1:]:
-            plt.axhline(x, linewidth=1, color='C0')
+            for x in interval[1:]:
+                plt.axhline(x, linewidth=1, color='C0')
 
-        plt.legend()
-        plt.savefig('./result/gaussian-{}-{}bits/{}-{}-component.png'.format(dataset_name, bits, i, h))
-        plt.clf()
+            plt.legend()
+            plt.savefig('./result/gaussian-{}-{}bits/{}-{}-component.png'.format(dataset_name, bits, i, int(valid_idx[i])))
+            plt.clf()
 
 
 if __name__ == '__main__':
     gaussian = {'Adiac': 6,
-                'BirdChicken': 3,
-                'DistalPhalanxOutlineAgeGroup': 4,
-                'ECGFiveDays': 6,
-                'FISH': 7,
-                'Herring': 4,
-                'ItalyPowerDemand': 4,
-                'Lighting7': 3,
-                'MedicalImages': 5,
-                'MiddlePhalanxOutlineAgeGroup': 5,
-                'MoteStrain': 5,
+                # 'BirdChicken': 3,
+                # 'DistalPhalanxOutlineAgeGroup': 4,
+                # 'ECGFiveDays': 6,
+                # 'FISH': 7,
+                # 'Herring': 4,
+                # 'ItalyPowerDemand': 4,
+                # 'Lighting7': 3,
+                # 'MedicalImages': 5,
+                # 'MiddlePhalanxOutlineAgeGroup': 5,
+                # 'MoteStrain': 5,
                 'Plane': 4,
-                'ProximalPhalanxOutlineCorrect': 5,
-                'ProximalPhalanxTW': 5,
-                'SwedishLeaf': 4,
-                'Trace': 7,
-                'TwoLeadECG': 6,
-                'Worms': 5,
-                'WormsTwoClass': 5
+                # 'ProximalPhalanxOutlineCorrect': 5,
+                # 'ProximalPhalanxTW': 5,
+                # 'SwedishLeaf': 4,
+                # 'Trace': 7,
+                # 'TwoLeadECG': 6,
+                # 'Worms': 5,
+                # 'WormsTwoClass': 5
                 }
 
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, '../eval-fig/normal')
+    eval_path = os.path.join(path, '../eval_fig/normal')
     dir_name = os.listdir(eval_path)
-    shuffle(dir_name)
-    for d in dir_name[:10]:
+    # shuffle(dir_name)
+    for d in dir_name[:]:
         dataset_name = os.path.basename(d)
         if dataset_name in gaussian:
             data_path = os.path.join(path, '../eval_data/{}.mat'.format(dataset_name))

@@ -121,7 +121,7 @@ if __name__ == "__main__":
     from paper.MPIII.eval import get_f, f1
 
     bits = range(3, 8)
-    data = scipy.io.loadmat('eval/Plane')
+    data = scipy.io.loadmat('eval_data/Plane')
 
     ts = data['data']
     window_size = int(data['subLen'][0][0])
@@ -131,8 +131,9 @@ if __name__ == "__main__":
 
     t_min, t_max = discretization_pre(ts, window_size)
 
-    for b in [5]:
-        c, h, compress_table, idx_bitsave = subsequence_selection(ts, t_min, t_max, mp, mpi, window_size, 10, b)
+    for b in [4]:
+        interval = sax_discretization_pre(ts, b, bounded=False)
+        c, h, compress_table, idx_bitsave = sax_subsequence_selection(ts, interval, t_min, t_max, mp, mpi, window_size, 10, b)
         idx_bitsave = np.array(idx_bitsave)
 
         cut_off = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
@@ -146,7 +147,7 @@ if __name__ == "__main__":
         precisions, recalls = get_f(valid_idx, tp, 0.2, window_size)
 
         plt.plot(recalls, precisions)
-        plt.title('{} bits compression\n DNorm {}'.format(b, f1(precisions, recalls)))
+        plt.title('{} bits compression\n Gaussian {}'.format(b, f1(precisions, recalls)))
         plt.ylabel('Precision')
         plt.xlabel('Recall')
         plt.show()

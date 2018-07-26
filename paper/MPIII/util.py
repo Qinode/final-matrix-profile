@@ -14,6 +14,17 @@ def discretization_pre(time_series, windows_size):
     return min, max
 
 
+def compress_test(data, window_size, bits, min, max, interval, compressible, hypothesis):
+    compressible = data[compressible: compressible+window_size]
+    hypothesis = data[hypothesis: hypothesis+window_size]
+
+    d_compressible = sax_discretization(compressible, min, max, interval)
+    d_hypothesis = sax_discretization(hypothesis, min, max, interval)
+
+    reduced_dl = rdl(d_compressible, d_hypothesis, bits)
+    return window_size * bits - reduced_dl, d_compressible, d_hypothesis
+
+
 def sax_discretization_pre(time_series, bits, bounded=False):
     z_time_series = (time_series - np.mean(time_series)) / np.std(time_series)
     min, max = np.min(z_time_series), np.max(z_time_series)
@@ -97,7 +108,7 @@ def pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums):
 # 0 for hypothesis, 1 for compressible
 def pick_best_candidates(time_sereis, t_min, t_max, candidates, candidate_idx, hypothesis, bits, mpi):
 
-    threshold_factor = 0.
+    threshold_factor = 0.2
 
     candidates_table = np.full(((len(candidate_idx), 2)), -np.inf)
 
@@ -154,6 +165,8 @@ def sax_pick_candidates(time_series, interval, t_min, t_max, window_size, mp, nu
 def sax_pick_best_candidates(time_sereis, interval, t_min, t_max, candidates, candidate_idx, hypothesis, bits, mpi):
     candidates_table = np.full(((len(candidate_idx), 2)), -np.inf)
 
+    threshold_factor = 0.2
+
     for i in range(len(candidates)):
         nn_idx = int(mpi[candidate_idx[i]])
         nn = time_sereis[nn_idx:nn_idx + candidates[i].shape[0]]
@@ -170,11 +183,11 @@ def sax_pick_best_candidates(time_sereis, interval, t_min, t_max, candidates, ca
 
         best_com = candidates[i].shape[0] * bits - best_com
 
-        if bit_save_hypo > best_com:
+        if bit_save_hypo > (best_com * (1 + threshold_factor)):
             candidates_table[i][0] = bit_save_hypo
             candidates_table[i][1] = 0
         else:
-            candidates_table[i][0] = best_com
+            candidates_table[i][0] = best_com * (1 + threshold_factor)
             candidates_table[i][1] = 1
 
     best_candidate = np.argmax(candidates_table[:, 0])
