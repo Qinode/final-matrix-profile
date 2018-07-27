@@ -22,7 +22,13 @@ def moving_std(time_series, moving_average, windows_size):
 
 
 def distance_profile(qt, window_size, mean_t, std_t, mean_q, std_q):
-    temp_term = (qt - window_size * mean_q * mean_t)/(std_q * std_t)
+
+    std_term = std_q * std_t
+    zeros_pos = np.where(std_term == 0)
+    std_term[zeros_pos] = 1
+
+    temp_term = (qt - window_size * mean_q * mean_t)/std_term
+
     d = 2 * (window_size * np.ones(temp_term.shape) - temp_term)
     return np.sqrt(np.abs(d))
 
