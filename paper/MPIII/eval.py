@@ -1,10 +1,13 @@
-from concurrent.futures import ProcessPoolExecutor
-from concurrent.futures import as_completed
 import numpy as np
 import time
 import datetime
 import scipy.io
 import os
+
+from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import as_completed
+from src.matrix_profile.matrixprofile import stomp
+
 
 from paper.MPIII.visual import subsequence_selection, sax_subsequence_selection
 from paper.MPIII.util import *
@@ -43,14 +46,15 @@ def f1(precisions, recalls):
 def run(dataset, data_name, save, save_path, bounded=False):
     mat_file = scipy.io.loadmat(dataset)
     data = mat_file['data']
-
     mp = mat_file['matrixProfile']
     mpi = mat_file['profileIndex'] - 1
+
     tp = mat_file['labIdx'] - 1
 
     p = 0.2
 
     window_size = int(mat_file['subLen'][0][0])
+
     t_min, t_max = discretization_pre(data, window_size)
 
     x_axis = np.arange(3, 8)
@@ -60,6 +64,11 @@ def run(dataset, data_name, save, save_path, bounded=False):
     for bits in x_axis:
         print('[{}] {} - {} bits'.format(get_timestampe(), data_name, bits))
         interval = sax_discretization_pre(data, bits, bounded=bounded)
+
+        print('[{}] {} Computing Matrix Profile Finished.'.format(get_timestampe(), data_name))
+
+        if save:
+            scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
 
         start = time.time()
         c, h, compress_table, idx_bitsave = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
@@ -166,7 +175,7 @@ if __name__ == '__main__':
     for d in data:
         data_name = d[:-4]
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_fig/fixed_regularization', data_name)
+        fig_path = os.path.join(path, 'eval_fig/', data_name)
 
         for dir_name in sub_dirs:
             os.makedirs(os.path.join(fig_path, dir_name))
