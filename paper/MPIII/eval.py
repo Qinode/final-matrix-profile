@@ -49,6 +49,11 @@ def run(dataset, data_name, save, save_path, bounded=False):
     mp = mat_file['matrixProfile']
     mpi = mat_file['profileIndex'] - 1
 
+    # matrix profile will be computed in scaled and z-normalised space
+    # rather than original space
+    # z_data = (data - np.mean(data))/(np.std(data))
+    # uz_data = (z_data - np.min(z_data))/(np.max(z_data) - np.min(z_data))
+
     tp = mat_file['labIdx'] - 1
 
     p = 0.2
@@ -64,6 +69,14 @@ def run(dataset, data_name, save, save_path, bounded=False):
     for bits in x_axis:
         print('[{}] {} - {} bits'.format(get_timestampe(), data_name, bits))
         interval = sax_discretization_pre(data, bits, bounded=bounded)
+
+        # 30/07/2018
+        # used for testing the the behaviour of digitising the time series before the matrix profile is computed.
+        # the result is in eval_fig/z_norm_mp
+
+        # q_data = np.digitize(uz_data, interval)
+        # print('[{}] {} Computing Matrix Profile.'.format(get_timestampe(), data_name))
+        # mp, mpi = stomp(q_data, q_data, window_size, True)
 
         print('[{}] {} Computing Matrix Profile Finished.'.format(get_timestampe(), data_name))
 
@@ -174,8 +187,10 @@ if __name__ == '__main__':
 
     for d in data:
         data_name = d[:-4]
+
         data_path = os.path.join(eval_path, data_name)
         fig_path = os.path.join(path, 'eval_fig/', data_name)
+        # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
 
         for dir_name in sub_dirs:
             os.makedirs(os.path.join(fig_path, dir_name))

@@ -121,7 +121,7 @@ if __name__ == "__main__":
     from paper.MPIII.eval import get_f, f1
 
     bits = range(3, 8)
-    data = scipy.io.loadmat('eval_data/Plane')
+    data = scipy.io.loadmat('eval_data/ToeSegmentation2')
 
     ts = data['data']
     window_size = int(data['subLen'][0][0])
