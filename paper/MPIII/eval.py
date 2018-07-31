@@ -80,18 +80,20 @@ def run(dataset, data_name, save, save_path, bounded=False):
 
         print('[{}] {} Computing Matrix Profile Finished.'.format(get_timestampe(), data_name))
 
-        if save:
-            scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
+        # if save:
+        #     scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
 
         start = time.time()
         c, h, compress_table, idx_bitsave = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
         end = time.time()
-        print('[{}] {} DNorm Compression time {}.'.format(get_timestampe(), data_name, end - start))
+        times = end - start
+        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, times))
 
-        start = time.time()
+        s_start = time.time()
         s_c, s_h, s_compress_table, s_idx_bitsave = sax_subsequence_selection(data, interval, t_min, t_max, mp, mpi, window_size, 10, bits)
-        end = time.time()
-        print('[{}] {} SAX Compression time {}.'.format(get_timestampe(), data_name, end - start))
+        s_end = time.time()
+        s_times = s_end - s_start
+        print('[{}] {} - {}bits SAX Compression time {}.'.format(get_timestampe(), data_name, bits, s_times))
 
         idx_bitsave = np.array(idx_bitsave)
         s_idx_bitsave = np.array(s_idx_bitsave)
@@ -120,10 +122,14 @@ def run(dataset, data_name, save, save_path, bounded=False):
 
         if save:
             scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
-                             {'compressible': c, 'hypothesis': h, 'compress_table': compress_table, 'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls})
+                             {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table),
+                              'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
+                              'process_time': times})
 
             scipy.io.savemat('{}/saved-data/gaussian-{}bits'.format(save_path, bits),
-                             {'compressible': s_c, 'hypothesis': s_h, 'compress_table': s_compress_table, 'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls})
+                             {'compressible': s_c, 'hypothesis': s_h, 'compress_table': str(s_compress_table),
+                              'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls,
+                              'process_time': s_times})
 
         plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
         plt.plot(s_idx_bitsave[:, 1], label='Gaussian Norm', color='C1')
@@ -189,7 +195,7 @@ if __name__ == '__main__':
         data_name = d[:-4]
 
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_fig/', data_name)
+        fig_path = os.path.join(path, 'eval_fig/normal-1-0', data_name)
         # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
 
         for dir_name in sub_dirs:
