@@ -108,7 +108,7 @@ def pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums):
 # 0 for hypothesis, 1 for compressible
 def pick_best_candidates(time_sereis, t_min, t_max, candidates, candidate_idx, hypothesis, bits, mpi):
 
-    threshold_factor = 0.2
+    threshold_factor = 0.0
 
     candidates_table = np.full(((len(candidate_idx), 2)), -np.inf)
 
@@ -165,7 +165,7 @@ def sax_pick_candidates(time_series, interval, t_min, t_max, window_size, mp, nu
 def sax_pick_best_candidates(time_sereis, interval, t_min, t_max, candidates, candidate_idx, hypothesis, bits, mpi):
     candidates_table = np.full(((len(candidate_idx), 2)), -np.inf)
 
-    threshold_factor = 0.2
+    threshold_factor = 0.0
 
     for i in range(len(candidates)):
         nn_idx = int(mpi[candidate_idx[i]])
