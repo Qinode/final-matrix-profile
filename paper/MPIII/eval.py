@@ -62,13 +62,14 @@ def run(dataset, data_name, save, save_path, bounded=False):
 
     t_min, t_max = discretization_pre(data, window_size)
 
-    x_axis = np.arange(3, 8)
+    x_axis = np.arange(3, 12)
     valid_idx_arr = []
     s_valid_idx_arr = []
 
     for bits in x_axis:
         print('[{}] {} - {} bits'.format(get_timestampe(), data_name, bits))
-        interval = sax_discretization_pre(data, bits, bounded=bounded)
+        dist = 'beta'
+        interval = sax_discretization_pre(data, bits, dist=dist, bounded=bounded)
 
         # 30/07/2018
         # used for testing the the behaviour of digitising the time series before the matrix profile is computed.
@@ -77,8 +78,7 @@ def run(dataset, data_name, save, save_path, bounded=False):
         # q_data = np.digitize(uz_data, interval)
         # print('[{}] {} Computing Matrix Profile.'.format(get_timestampe(), data_name))
         # mp, mpi = stomp(q_data, q_data, window_size, True)
-
-        print('[{}] {} Computing Matrix Profile Finished.'.format(get_timestampe(), data_name))
+        # print('[{}] {} Computing Matrix Profile Finished.'.format(get_timestampe(), data_name))
 
         # if save:
         #     scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
@@ -126,15 +126,15 @@ def run(dataset, data_name, save, save_path, bounded=False):
                               'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
                               'process_time': times})
 
-            scipy.io.savemat('{}/saved-data/gaussian-{}bits'.format(save_path, bits),
+            scipy.io.savemat('{}/saved-data/{}-{}bits'.format(save_path, dist, bits),
                              {'compressible': s_c, 'hypothesis': s_h, 'compress_table': str(s_compress_table),
                               'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls,
                               'process_time': s_times})
 
         plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
-        plt.plot(s_idx_bitsave[:, 1], label='Gaussian Norm', color='C1')
+        plt.plot(s_idx_bitsave[:, 1], label='{} Norm'.format(dist), color='C1')
         plt.axvline(cut_off, linewidth=1, label='DNorm Cut Off', color='C0')
-        plt.axvline(s_cut_off, linewidth=1, label='Gaussian Norm Cut Off', color='C1')
+        plt.axvline(s_cut_off, linewidth=1, label='{} Norm Cut Off'.format(dist), color='C1')
         plt.legend()
         plt.title('{} bits compression'.format(bits))
         plt.ylabel('Bits')
@@ -146,10 +146,10 @@ def run(dataset, data_name, save, save_path, bounded=False):
         plt.clf()
 
         plt.plot(recalls, precisions, label='DNorm', color='C0')
-        plt.plot(s_recalls, s_precisions, label='Gaussian Norm', color='C1')
+        plt.plot(s_recalls, s_precisions, label='{} Norm'.format(dist), color='C1')
         plt.legend()
 
-        plt.title('{} bits compression\n DNorm {} - Gaussian Norm {}'.format(bits, f1(precisions, recalls), f1(s_precisions, s_recalls)))
+        plt.title('{} bits compression\n DNorm {} - {} {}'.format(bits, f1(precisions, recalls), dist, f1(s_precisions, s_recalls)))
         plt.ylabel('Precision')
         plt.xlabel('Recall')
         if save:
@@ -159,7 +159,7 @@ def run(dataset, data_name, save, save_path, bounded=False):
         plt.clf()
 
     plt.plot(x_axis, valid_idx_arr, label='DNorm')
-    plt.plot(x_axis, s_valid_idx_arr, label='Gaussian Norm')
+    plt.plot(x_axis, s_valid_idx_arr, label='{} Norm'.format(dist))
     plt.legend()
     plt.title('Components vs Compression Bit')
     if save:
@@ -195,7 +195,7 @@ if __name__ == '__main__':
         data_name = d[:-4]
 
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_fig/normal-1-0', data_name)
+        fig_path = os.path.join(path, 'eval_fig/beta-1-0', data_name)
         # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
 
         for dir_name in sub_dirs:

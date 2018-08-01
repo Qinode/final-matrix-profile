@@ -25,18 +25,24 @@ def compress_test(data, window_size, bits, min, max, interval, compressible, hyp
     return window_size * bits - reduced_dl, d_compressible, d_hypothesis
 
 
-def sax_discretization_pre(time_series, bits, bounded=False):
+def sax_discretization_pre(time_series, bits, dist, bounded=False):
     z_time_series = (time_series - np.mean(time_series)) / np.std(time_series)
     min, max = np.min(z_time_series), np.max(z_time_series)
     unit_z_time_series = (z_time_series - min) / (max - min)
     mean, std = np.mean(unit_z_time_series), np.std(unit_z_time_series)
 
-    interval = scipy.stats.norm.ppf(np.arange(2 ** bits)/(2 ** bits), mean, std)
+    if dist == 'norm':
+        interval = scipy.stats.norm.ppf(np.arange(2 ** bits)/(2 ** bits), mean, std)
 
-    if bounded:
-        upper = mean + 3 * std
-        lower = mean - 3 * std
-        interval = (interval - lower)/(upper - lower)
+        if bounded:
+            upper = mean + 3 * std
+            lower = mean - 3 * std
+            interval = (interval - lower)/(upper - lower)
+    elif dist == 'beta':
+        a, b, _, _ = scipy.stats.beta.fit(unit_z_time_series, loc=mean, scale=std)
+        interval = scipy.stats.beta.ppf(np.arange(2 ** bits)/(2 ** bits), a, b, mean, std)
+    else:
+        raise ValueError("{} dist not support, only [norm, beta] are support".format(dist))
 
     return interval
 
