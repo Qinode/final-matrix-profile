@@ -13,10 +13,10 @@ def distribution_test(dataset, data_name, **kwargs):
     mat_file = scipy.io.loadmat(dataset)
     data = mat_file['data'].squeeze()
 
-    probplot = sm.ProbPlot(data, scipy.stats.beta, fit=True)
+    probplot = sm.ProbPlot(data, scipy.stats.uniform, fit=True)
     probplot.qqplot(line='45')
 
-    plt.savefig(os.path.join(path, 'test_result/beta/{}.png'.format(data_name)))
+    plt.savefig(os.path.join(path, 'test_result/uniform/{}.png'.format(data_name)))
     plt.title(data_name)
     plt.clf()
 
