@@ -3,15 +3,15 @@ import scipy.stats
 
 
 def discretization_pre(time_series, windows_size):
-    min, max = np.inf, -np.inf
+    t_min, t_max = np.inf, -np.inf
     for i in range(time_series.shape[0] - windows_size + 1):
         sub = time_series[i: i+windows_size]
         mean, std = np.mean(sub), np.std(sub)
         sub = (sub - mean)/std if std != 0 else sub - mean
 
-        min = np.min([np.min(sub), min])
-        max = np.max([np.max(sub), max])
-    return min, max
+        t_min = np.min([np.min(sub), t_min])
+        t_max = np.max([np.max(sub), t_max])
+    return t_min, t_max
 
 
 def compress_test(data, window_size, bits, min, max, interval, compressible, hypothesis):
