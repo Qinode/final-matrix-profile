@@ -61,6 +61,3 @@ if __name__ == '__main__':
 
         corr[i] = np.array([rdl_res, l2]).reshape(1, 2)
 
-
-
-
