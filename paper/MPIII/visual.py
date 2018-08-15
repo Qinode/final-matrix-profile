@@ -1,3 +1,4 @@
+import time
 
 from paper.MPIII.util import *
 
@@ -88,6 +89,7 @@ def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bit
     return C_idx, H_idx, compress_table, idx_bitsave
 
 def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums, bits):
+    times = [time.time()]
     max_salient = np.around(time_series.shape[0] / window_size)
     mp, mpi = mp.copy(), mpi.copy()
 
@@ -99,7 +101,6 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
     bit_cost = U * window_size * bits
 
     while True and (len(C) + len(H) <= max_salient) and U >= 0:
-
         candidates, candidate_idxs = pick_candidates(time_series, t_min, t_max, window_size, mp, bits, nums)
 
         if not candidate_idxs:
@@ -140,10 +141,13 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
             else:
                 compress_table[compress_by].append(cand_idx)
 
-    return C_idx, H_idx, compress_table, idx_bitsave
+        times.append(time.time())
+
+    return C_idx, H_idx, compress_table, idx_bitsave, times
 
 
 def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, window_size, nums, bits):
+    times = [time.time()]
     max_salient = np.around(time_series.shape[0] / window_size)
     mp, mpi = mp.copy(), mpi.copy()
 
@@ -196,7 +200,9 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
             else:
                 compress_table[compress_by].append(cand_idx)
 
-    return C_idx, H_idx, compress_table, idx_bitsave
+        times.append(time.time())
+
+    return C_idx, H_idx, compress_table, idx_bitsave, times
 
 
 if __name__ == "__main__":

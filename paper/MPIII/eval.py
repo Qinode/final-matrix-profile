@@ -83,11 +83,19 @@ def run(dataset, data_name, save, save_path, bounded=False):
         # if save:
         #     scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
 
-        start = time.time()
-        c, h, compress_table, idx_bitsave = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
-        end = time.time()
-        times = end - start
-        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, times))
+
+        # times[0] stores the start timestamp.
+        # times[i+1] stores the timestamp of ith pattern (compressible, hypothesis) is added.
+
+        c, h, compress_table, idx_bitsave, times = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
+
+        if cut_off.shape[0] == 0:
+            cut_off = idx_bitsave[:, 1].shape[0]
+        else:
+            cut_off = cut_off[0]
+
+        process_times = times[cut_off+1] - times[0]
+        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, process_times))
 
         s_start = time.time()
         s_c, s_h, s_compress_table, s_idx_bitsave = sax_subsequence_selection(data, interval, t_min, t_max, mp, mpi, window_size, 10, bits)
@@ -98,11 +106,6 @@ def run(dataset, data_name, save, save_path, bounded=False):
         idx_bitsave = np.array(idx_bitsave)
         s_idx_bitsave = np.array(s_idx_bitsave)
         cut_off = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
-
-        if cut_off.shape[0] == 0:
-            cut_off = idx_bitsave[:, 1].shape[0]
-        else:
-            cut_off = cut_off[0]
 
         s_cut_off = np.where(np.diff(s_idx_bitsave[:, 1]) > 0)[0]
 
@@ -124,7 +127,7 @@ def run(dataset, data_name, save, save_path, bounded=False):
             scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
                              {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table),
                               'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
-                              'process_time': times})
+                              'process_time': process_times})
 
             scipy.io.savemat('{}/saved-data/{}-{}bits'.format(save_path, dist, bits),
                              {'compressible': s_c, 'hypothesis': s_h, 'compress_table': str(s_compress_table),

@@ -1,0 +1,1 @@
+1. The time measured for algorithm without using ANN is the time used to collect all the patterns, which is not the actual time (The actual time is when it stops, normally before the number of patterns reach the maximum threshold). This problem is fixed in plots08-14 result.

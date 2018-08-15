@@ -15,8 +15,6 @@ def subsequence_process(sub, min, max):
 
 def component_analysis(dataset_name, bits, data_path, mat_path):
 
-    os.makedirs('./result/gaussian-{}-{}bits'.format(dataset_name, bits))
-
     raw_data = sio.loadmat(data_path)
     data = raw_data['data']
     window_size = int(raw_data['subLen'][0][0])
@@ -26,7 +24,7 @@ def component_analysis(dataset_name, bits, data_path, mat_path):
     idx_bitsave = mat_file['idx_bitsave']
     compress_table = ast.literal_eval(mat_file['compress_table'][0])
 
-    interval = sax_discretization_pre(data, bits)
+    interval = sax_discretization_pre(data, bits, 'norm')
     min, max = discretization_pre(data, window_size)
 
     try:
@@ -41,24 +39,18 @@ def component_analysis(dataset_name, bits, data_path, mat_path):
 
     assert(valid_h.shape[0] + valid_c.shape[0] == valid_idx.shape[0])
 
-    for i in range(valid_idx.shape[0]):
-        if idx_bitsave[i, 2] == 0:
-            compressibles = compress_table[int(valid_idx[i])]
+    compressible_idx = int(idx_bitsave[cut_off + 1][0])
 
-            hypothesis = subsequence_process(data[int(valid_idx[i]): int(valid_idx[i])+window_size], min, max)
-            plt.plot(hypothesis, color='C1', label='Hypothesis')
+    for key, value in compress_table.items():
+        if compressible_idx in value:
+            hypothesis_idx = int(key)
+            break
 
-            for c in compressibles:
-                if c in valid_c:
-                    a_compressible = subsequence_process(data[c: c+window_size], min, max)
-                    plt.plot(a_compressible, color='C2', label='Compressible')
+    plt.plot(sax_discretization(data[compressible_idx:compressible_idx+window_size], min, max, interval), label='compressible')
+    plt.plot(sax_discretization(data[hypothesis_idx:hypothesis_idx+window_size], min, max, interval), label='hypothesis')
+    plt.legend()
+    plt.show()
 
-            for x in interval[1:]:
-                plt.axhline(x, linewidth=1, color='C0')
-
-            plt.legend()
-            plt.savefig('./result/gaussian-{}-{}bits/{}-{}-component.png'.format(dataset_name, bits, i, int(valid_idx[i])))
-            plt.clf()
 
 
 if __name__ == '__main__':
@@ -73,7 +65,7 @@ if __name__ == '__main__':
                 # 'MedicalImages': 5,
                 # 'MiddlePhalanxOutlineAgeGroup': 5,
                 # 'MoteStrain': 5,
-                'Plane': 4,
+                # 'Plane': 4,
                 # 'ProximalPhalanxOutlineCorrect': 5,
                 # 'ProximalPhalanxTW': 5,
                 # 'SwedishLeaf': 4,
@@ -84,7 +76,7 @@ if __name__ == '__main__':
                 }
 
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, '../eval_fig/normal')
+    eval_path = os.path.join(path, '../eval_fig/normal-1-0')
     dir_name = os.listdir(eval_path)
     # shuffle(dir_name)
     for d in dir_name[:]:

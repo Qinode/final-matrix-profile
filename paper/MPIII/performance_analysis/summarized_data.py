@@ -11,12 +11,12 @@ if __name__ == '__main__':
     for dataset in datasets:
         name = dataset[:-4]
         ann_dir = 'ann_selection'
-        norm_dir = 'normal-1-0'
+        norm_dir = 'eval-2'
 
         exp_result[name] = {}
 
         for bit in bits_range:
-            norm_mat_path= '../eval_fig/{}/{}/saved-data/dnorm-{}bits.mat'.format(norm_dir, name, bit)
+            norm_mat_path = '../eval_fig/{}/{}/saved-data/dnorm-{}bits.mat'.format(norm_dir, name, bit)
             ann_mat_path = '../eval_fig/{}/{}/saved-data/dnorm-{}bits.mat'.format(ann_dir, name, bit)
 
             temp = {}
@@ -28,7 +28,7 @@ if __name__ == '__main__':
                 continue
 
             try:
-                ann_mat= sio.loadmat(ann_mat_path)
+                ann_mat = sio.loadmat(ann_mat_path)
             except FileNotFoundError as error:
                 print(error)
                 continue
@@ -38,4 +38,4 @@ if __name__ == '__main__':
 
             exp_result[name][bit] = temp
 
-    pickle.dump(exp_result, open('result_dict.pkl', 'wb'))
+    pickle.dump(exp_result, open('result_dict08-14.pkl', 'wb'))

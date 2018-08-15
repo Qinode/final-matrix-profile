@@ -42,7 +42,7 @@ def plot_bar(score1, score2, label1, label2, path):
     plt.close()
 
 if __name__ == '__main__':
-    result = pickle.load(open('result_dict.pkl', 'rb'))
+    result = pickle.load(open('result_dict08-14.pkl', 'rb'))
     datasets = os.listdir('../eval_data')
 
     bits_range = [3, 4, 5, 6, 7]
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         name = dataset[:-4]
 
         for bit in bits_range:
-            plot_dir = './plots/{}/{}'.format(name, bit)
+            plot_dir = './plots08-14/{}/{}'.format(name, bit)
             os.makedirs(plot_dir)
 
             # f1, precision, recall

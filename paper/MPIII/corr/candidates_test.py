@@ -5,6 +5,14 @@ import numpy as np
 from paper.MPIII.util import discretization_pre, pick_candidates
 from paper.MPIII.corr.rdl_distribution import get_hits
 
+# this script test the coverage of cs against hc
+#   * cs is the first n candidates selected from matrix profile
+#   * hc is the n candidates selected by best_candidate selection algorithm
+#
+# the script by experiment proves that the coverage of cs is very similar to hc,
+# which can be extracted from the matrix profile at the very first time and used
+# to build the approximate nearest neighbor search.
+
 def f(data_name, raw_data, saved_data, bits):
     mp = raw_data['matrixProfile']
     mpi = raw_data['profileIndex'] - 1

@@ -8,7 +8,6 @@ from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
 from src.matrix_profile.matrixprofile import stomp
 
-
 from paper.MPIII.visual import subsequence_selection, sax_subsequence_selection, approximate_subsequence_selction
 from paper.MPIII.util import *
 
