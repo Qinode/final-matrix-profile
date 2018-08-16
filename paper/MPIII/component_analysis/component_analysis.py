@@ -13,16 +13,22 @@ def subsequence_process(sub, min, max):
     return sub
 
 
-def component_analysis(dataset_name, bits, data_path, mat_path):
+def component_analysis(dataset_name, bits, data_path, dnorm_mat, gaussian_mat):
 
     raw_data = sio.loadmat(data_path)
     data = raw_data['data']
+    mpi = raw_data['profileIndex'] - 1
     window_size = int(raw_data['subLen'][0][0])
-    mat_file = sio.loadmat(mat_path)
-    compressible = mat_file['compressible']
-    hypothesis = mat_file['hypothesis']
-    idx_bitsave = mat_file['idx_bitsave']
-    compress_table = ast.literal_eval(mat_file['compress_table'][0])
+
+    dnorm_mat_file = sio.loadmat(dnorm_mat)
+    gaussian_mat_file = sio.loadmat(gaussian_mat)
+
+    compressible = gaussian_mat_file['compressible']
+    hypothesis = gaussian_mat_file['hypothesis']
+    idx_bitsave = gaussian_mat_file['idx_bitsave']
+    compress_table = ast.literal_eval(gaussian_mat_file['compress_table'][0])
+
+    dnorm_idx_bit_save = dnorm_mat_file['idx_bitsave']
 
     interval = sax_discretization_pre(data, bits, 'norm')
     min, max = discretization_pre(data, window_size)
@@ -39,17 +45,31 @@ def component_analysis(dataset_name, bits, data_path, mat_path):
 
     assert(valid_h.shape[0] + valid_c.shape[0] == valid_idx.shape[0])
 
-    compressible_idx = int(idx_bitsave[cut_off + 1][0])
+    compressible_idx = 271393 # int(idx_bitsave[cut_off + 1][0])
+    hypothesis_idx = int(mpi[compressible_idx])
 
-    for key, value in compress_table.items():
-        if compressible_idx in value:
-            hypothesis_idx = int(key)
-            break
+    # for key, value in compress_table.items():
+    #     if compressible_idx in value:
+    #         hypothesis_idx = int(key)
+    #         print(hypothesis_idx)
+    #         break
 
-    plt.plot(sax_discretization(data[compressible_idx:compressible_idx+window_size], min, max, interval), label='compressible')
-    plt.plot(sax_discretization(data[hypothesis_idx:hypothesis_idx+window_size], min, max, interval), label='hypothesis')
+    print(hypothesis_idx)
+    # plt.plot(discretization(data[compressible_idx:compressible_idx+window_size], min, max, bits), label='compressible')
+    # plt.plot(discretization(data[hypothesis_idx:hypothesis_idx+window_size], min, max, bits), label='hypothesis')
+    plt.plot(subsequence_process(data[compressible_idx:compressible_idx+window_size], min, max), label='compressible')
+    plt.plot(subsequence_process(data[hypothesis_idx:hypothesis_idx+window_size], min, max), label='hypothesis')
     plt.legend()
+
+    for i in interval[1:]:
+        plt.axhline(i, linewidth=0.5)
+
     plt.show()
+
+    # print('dnrom - gaussian')
+    # np.set_printoptions(threshold=np.nan)
+    # idx_compare = np.c_[dnorm_idx_bit_save[:, 0], idx_bitsave[:, 0], dnorm_idx_bit_save[:, 2], idx_bitsave[:, 2]]
+    # print(idx_compare.astype(np.int))
 
 
 
@@ -83,7 +103,8 @@ if __name__ == '__main__':
         dataset_name = os.path.basename(d)
         if dataset_name in gaussian:
             data_path = os.path.join(path, '../eval_data/{}.mat'.format(dataset_name))
-            mat_path = os.path.join(eval_path, d, 'saved-data', 'gaussian-{}bits.mat'.format(gaussian[d]))
-            component_analysis(dataset_name, gaussian[d], data_path, mat_path)
+            dnorm_mat = os.path.join(eval_path, d, 'saved-data', 'dnorm-{}bits.mat'.format(gaussian[d]))
+            gaussian_mat = os.path.join(eval_path, d, 'saved-data', 'gaussian-{}bits.mat'.format(gaussian[d]))
+            component_analysis(dataset_name, gaussian[d], data_path, dnorm_mat, gaussian_mat)
         else:
             pass
