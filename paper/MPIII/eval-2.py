@@ -86,33 +86,39 @@ def run(dataset, data_name, save, save_path, bounded=False, x_axis=[3, 4, 5, 6, 
         # times[0] stores the start timestamp.
         # times[i+1] stores the timestamp of ith pattern (compressible, hypothesis) is added.
 
-        c, h, compress_table, idx_bitsave, times = subsequence_selection(data, t_min, t_max, mp, mpi, window_size, 10, bits)
+        c, h, compress_table, idx_bitsave, picking_time, process_time = subsequence_selection(data, t_min, t_max, mp,
+                                                                                              mpi, window_size, 10,
+                                                                                              bits)
 
         idx_bitsave = np.array(idx_bitsave)
         cut_off = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
 
         if cut_off.shape[0] == 0:
             cut_off = idx_bitsave[:, 1].shape[0]
-            process_times = times[-1] - times[0]
+            pt = process_time[-1] - process_time[0]
         else:
             cut_off = cut_off[0]
-            process_times = times[cut_off+1] - times[0]
+            pt = process_time[cut_off+1] - process_time[0]
+        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, pt))
 
-        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, process_times))
-
-        s_c, s_h, s_compress_table, s_idx_bitsave, s_times = sax_subsequence_selection(data, interval, t_min, t_max, mp, mpi, window_size, 10, bits)
+        s_c, s_h, s_compress_table, s_idx_bitsave, s_picking_time, s_process_time = sax_subsequence_selection(data,
+                                                                                                              interval,
+                                                                                                              t_min,
+                                                                                                              t_max, mp,
+                                                                                                              mpi,
+                                                                                                              window_size,
+                                                                                                              10, bits)
 
         s_idx_bitsave = np.array(s_idx_bitsave)
         s_cut_off = np.where(np.diff(s_idx_bitsave[:, 1]) > 0)[0]
 
         if s_cut_off.shape[0] == 0:
             s_cut_off = s_idx_bitsave[:, 1].shape[0]
-            s_process_time = s_times[-1] - s_times[0]
+            s_pt = s_process_time[-1] - s_process_time[0]
         else:
             s_cut_off = s_cut_off[0]
-            s_process_time = s_times[s_cut_off+1] - s_times[0]
-
-        print('[{}] {} - {}bits SAX Compression time {}.'.format(get_timestampe(), data_name, bits, s_process_time))
+            s_pt = s_process_time[s_cut_off+1] - s_process_time[0]
+        print('[{}] {} - {}bits SAX Compression time {}.'.format(get_timestampe(), data_name, bits, s_pt))
 
         valid_idx = idx_bitsave[:, 0][:cut_off]
         s_valid_idx = s_idx_bitsave[:, 0][:s_cut_off]
@@ -127,81 +133,50 @@ def run(dataset, data_name, save, save_path, bounded=False, x_axis=[3, 4, 5, 6, 
             scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
                              {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table),
                               'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
-                              'process_time': times})
+                              'picking_time': picking_time,
+                              'process_time': process_time})
 
             scipy.io.savemat('{}/saved-data/{}-{}bits'.format(save_path, dist, bits),
                              {'compressible': s_c, 'hypothesis': s_h, 'compress_table': str(s_compress_table),
                               'idx_bitsave': s_idx_bitsave, 'precisions': s_precisions, 'recalls': s_recalls,
-                              'process_time': times})
-
-    #     plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
-    #     plt.plot(s_idx_bitsave[:, 1], label='{} Norm'.format(dist), color='C1')
-    #     plt.axvline(cut_off, linewidth=1, label='DNorm Cut Off', color='C0')
-    #     plt.axvline(s_cut_off, linewidth=1, label='{} Norm Cut Off'.format(dist), color='C1')
-    #     plt.legend()
-    #     plt.title('{} bits compression'.format(bits))
-    #     plt.ylabel('Bits')
-    #     plt.xlabel('Number of Components')
-    #     if save:
-    #         plt.savefig('{}/bits/{} bits.png'.format(save_path, bits))
-    #     else:
-    #         plt.show()
-    #     plt.clf()
-    #
-    #     plt.plot(recalls, precisions, label='DNorm', color='C0')
-    #     plt.plot(s_recalls, s_precisions, label='{} Norm'.format(dist), color='C1')
-    #     plt.legend()
-    #
-    #     plt.title('{} bits compression\n DNorm {} - {} {}'.format(bits, f1(precisions, recalls), dist, f1(s_precisions, s_recalls)))
-    #     plt.ylabel('Precision')
-    #     plt.xlabel('Recall')
-    #     if save:
-    #         plt.savefig('{}/recall-precision/{} bits.png'.format(save_path, bits))
-    #     else:
-    #         plt.show()
-    #     plt.clf()
-    #
-    # plt.plot(x_axis, valid_idx_arr, label='DNorm')
-    # plt.plot(x_axis, s_valid_idx_arr, label='{} Norm'.format(dist))
-    # plt.legend()
-    # plt.title('Components vs Compression Bit')
-    # if save:
-    #     plt.savefig('{}/components/components-bits.png'.format(save_path))
-    # plt.clf()
+                              'picking_time': s_picking_time,
+                              'process_time': s_process_time})
 
     return '[{}] {} finished.'.format(get_timestampe(), data_name)
 
 
-# if __name__ == '__main__':
-#     import matplotlib.pyplot as plt
-#
-#     run('./eval_data/Plane', 'Plane', False, '', bounded=False)
-
 if __name__ == '__main__':
     import matplotlib
+    import argparse
     matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--part', type=int, action='store', dest='part', default=-1)
+    args = parser.parse_args()
+
+    part = args.part
+    if part < 0:
+        raise ValueError('parameter part must be positive')
 
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, 'eval_data')
+    eval_path = os.path.join(path, 'eval_data/eval_data-{}'.format(part))
     data = os.listdir(eval_path)
 
     sub_dirs = ['recall-precision', 'bits', 'components', 'saved-data']
 
     pool = ProcessPoolExecutor(8)
     futures =[]
-
     parmas = []
 
     for d in data:
         data_name = d[:-4]
 
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_fig/eval-2(dnorm, gaussian)(3-7)', data_name)
-        # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
+        fig_path = os.path.join(path, 'eval_result/result', data_name)
 
         for dir_name in sub_dirs:
-            os.makedirs(os.path.join(fig_path, dir_name))
+            if not os.path.exists(os.path.join(fig_path, dir_name)):
+                os.makedirs(os.path.join(fig_path, dir_name))
 
         parmas.append((data_path, data_name, fig_path))
 

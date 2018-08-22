@@ -43,13 +43,13 @@ def plot_bar(score1, score2, label1, label2, path):
     plt.close()
 
 if __name__ == '__main__':
-    result = pickle.load(open('result_dict.pkl', 'rb'))
+    result = pickle.load(open('pickles/result_dict08-14.pkl', 'rb'))
     datasets = os.listdir('../eval_data')
 
     bits_range = [3, 4, 5, 6, 7]
 
     plot_dir = './dnorm-gaussian/'
-    os.makedirs(plot_dir)
+    # os.makedirs(plot_dir)
 
     for dataset in datasets:
         name = dataset[:-4]
@@ -63,12 +63,15 @@ if __name__ == '__main__':
             recalls = []
             for bit in bits_range:
                 save_data_path = '../eval_fig/normal-1-0/{}/saved-data/{}-{}bits'.format(name, w, bit)
+                raw_data_path = '../eval_data/{}'.format(name)
 
                 try:
                     matfile = sio.loadmat(save_data_path)
+                    raw_data = sio.loadmat(raw_data_path)
                 except FileNotFoundError:
                     continue
 
+                data = raw_data['data']
                 precisions.append(0 if matfile['precisions'].shape[0] == 0 else matfile['precisions'][0][-1])
                 recalls.append(0 if matfile['recalls'].shape[0] == 0 else matfile['recalls'][0][-1])
 
@@ -78,7 +81,7 @@ if __name__ == '__main__':
                 1.0, recalls, out=np.zeros_like(recalls), where=recalls != 0))
             f1 = np.divide(2.0, f1, out=np.zeros_like(f1), where=f1 != 0)
 
-            print('{} - {}'.format(name, w))
+            print('{} - {} - {}'.format(name, w, data.shape[0]))
             print('Precisions: {}'.format(precisions))
             print('recalls   : {}'.format(recalls))
             print('F1        : {}'.format(f1))

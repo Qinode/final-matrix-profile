@@ -61,7 +61,7 @@ def run(dataset, data_name, save, save_path, bounded=False):
 
     t_min, t_max = discretization_pre(data, window_size)
 
-    x_axis = np.arange(3, 12)
+    x_axis = np.arange(3, 8)
     valid_idx_arr = []
 
     for bits in x_axis:
@@ -78,11 +78,8 @@ def run(dataset, data_name, save, save_path, bounded=False):
         # if save:
         #     scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
 
-        start = time.time()
-        c, h, compress_table, idx_bitsave = approximate_subsequence_selction(data, t_min, t_max, mp, mpi, window_size, bits)
-        end = time.time()
-        times = end - start
-        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, times))
+        c, h, compress_table, idx_bitsave, times = approximate_subsequence_selction(data, t_min, t_max, mp, mpi, window_size, bits)
+        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, times[-1] - times[0]))
 
         idx_bitsave = np.array(idx_bitsave)
 
@@ -99,7 +96,6 @@ def run(dataset, data_name, save, save_path, bounded=False):
                              {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table),
                               'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
                               'process_time': times})
-
 
         plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
         plt.axvline(cut_off, linewidth=1, label='DNorm Cut Off', color='C0')
@@ -161,7 +157,7 @@ if __name__ == '__main__':
         data_name = d[:-4]
 
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_fig/ann_selection', data_name)
+        fig_path = os.path.join(path, 'eval_fig/ann_selection08-17', data_name)
         # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
 
         for dir_name in sub_dirs:

@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bits, trees=100):
     from annoy import AnnoyIndex
 
+    candidate_picking_time = []
+    process_time = [time.time()]
     mp, mpi = mp.copy(), mpi.copy()
     max_patterns = ts.shape[0] // window_size
 
@@ -23,7 +25,7 @@ def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bit
 
     ann_indexer.build(trees)
 
-    C, C_idx, H, H_idx = [], [], [], []
+    C, C_idx, H, H_idx = [], set(), [], set()
     idx_bitsave = []
     compress_table = {}
 
@@ -31,28 +33,35 @@ def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bit
     bit_cost = U * window_size * bits
 
     for i in range(len(candidate_idx)):
+        if candidate_idx[i] in H_idx or candidate_idx[i] in C_idx:
+            continue
+
         if len(H) == 0:
             H.append(candidates[i])
-            H_idx.append(candidate_idx[i])
+            H_idx.add(candidate_idx[i])
+            idx_bitsave.append([candidate_idx[i], bit_cost, 0])
+            # times.append(time.time())
             continue
 
         mpi_nn = mpi[candidate_idx[i]][0]
         quantized_mpi_nn = discretization(ts[mpi_nn:mpi_nn+window_size], t_min, t_max, bits)
         hypo_save = window_size * bits - rdl(quantized_mpi_nn, candidates[i], bits)
 
+        start = time.time()
         approximate_nn = ann_indexer.get_nns_by_item(i, 2)
         if len(approximate_nn) == 0:
             print('Approximate nearest neighbour not found')
             H.append(candidates[i])
-            H_idx.append(candidate_idx[i])
+            H_idx.add(candidate_idx[i])
             continue
         else:
             ann = approximate_nn[1]
             compress_save = window_size * bits - rdl(candidates[i], candidates[ann], bits)
+        candidate_picking_time.append(time.time() - start)
 
         if hypo_save > compress_save:
             H.append(candidates[i])
-            H_idx.append(candidate_idx[i])
+            H_idx.add(candidate_idx[i])
 
             if len(idx_bitsave) == 0:
                 idx_bitsave.append([candidate_idx[i], bit_cost, 0])
@@ -67,15 +76,23 @@ def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bit
 
         else:
             C.append(candidates[i])
-            C_idx.append(candidate_idx[i])
+            C_idx.add(candidate_idx[i])
 
             if(candidate_idx[ann] not in H_idx):
                 H.append(candidates[ann])
-                H_idx.append(candidate_idx[ann])
+                H_idx.add(candidate_idx[ann])
+
+                if len(idx_bitsave) == 0:
+                    idx_bitsave.append([candidate_idx[ann], bit_cost, 0])
+                else:
+                    previous_cost = idx_bitsave[-1][1]
+                    idx_bitsave.append([candidate_idx[ann], previous_cost, 0])
+
+                candidate_picking_time.append(candidate_picking_time[-1])
                 U -= 1
-                # print('Hypothesis not included yet.')
 
             U -= 1
+
             new_cost = bit(C, H, U, window_size, bits)
             bit_cost = min(bit_cost, new_cost)
 
@@ -86,10 +103,14 @@ def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bit
             else:
                 compress_table[candidate_idx[ann]].append(candidate_idx[i])
 
-    return C_idx, H_idx, compress_table, idx_bitsave
+        process_time.append(time.time())
+
+    return list(C_idx), list(H_idx), compress_table, idx_bitsave, candidate_picking_time, process_time
+
 
 def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums, bits):
-    times = [time.time()]
+    candidate_picking_time = []
+    process_time = [time.time()]
     max_salient = np.around(time_series.shape[0] / window_size)
     mp, mpi = mp.copy(), mpi.copy()
 
@@ -106,6 +127,7 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
         if not candidate_idxs:
             break
 
+        start = time.time()
         best_cand, cand_idx, cand_type, compress_by = pick_best_candidates(time_series, t_min, t_max, candidates, candidate_idxs, H, bits, mpi)
 
         exc_start = max(0, cand_idx - (window_size // 2))
@@ -122,6 +144,7 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
             else:
                 idx_bitsave.append([cand_idx, bit_cost, cand_type])
 
+            candidate_picking_time.append(time.time() - start)
             U -= 1
 
             if cand_idx not in compress_table:
@@ -129,7 +152,10 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
         else:
             C.append(best_cand)
             C_idx.append(cand_idx)
+
+            candidate_picking_time.append(time.time() - start)
             U -= 1
+
             new_cost = bit(C, H, U, window_size, bits)
             bit_cost = min(bit_cost, new_cost)
 
@@ -141,13 +167,14 @@ def subsequence_selection(time_series, t_min, t_max, mp, mpi, window_size, nums,
             else:
                 compress_table[compress_by].append(cand_idx)
 
-        times.append(time.time())
+        process_time.append(time.time())
 
-    return C_idx, H_idx, compress_table, idx_bitsave, times
+    return C_idx, H_idx, compress_table, idx_bitsave, candidate_picking_time, process_time
 
 
 def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, window_size, nums, bits):
-    times = [time.time()]
+    candidate_picking_time = []
+    process_time = [time.time()]
     max_salient = np.around(time_series.shape[0] / window_size)
     mp, mpi = mp.copy(), mpi.copy()
 
@@ -165,6 +192,7 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
         if not candidate_idxs:
             break
 
+        start = time.time()
         best_cand, cand_idx, cand_type, compress_by = sax_pick_best_candidates(time_series, interval, t_min, t_max, candidates, candidate_idxs, H, bits, mpi)
 
         exc_start = max(0, cand_idx - (window_size // 2))
@@ -181,6 +209,7 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
             else:
                 idx_bitsave.append([cand_idx, bit_cost, cand_type])
 
+            candidate_picking_time.append(time.time() - start)
             U -= 1
 
             if cand_idx not in compress_table:
@@ -188,7 +217,10 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
         else:
             C.append(best_cand)
             C_idx.append(cand_idx)
+
+            candidate_picking_time.append(time.time() - start)
             U -= 1
+
             new_cost = bit(C, H, U, window_size, bits)
             idx_bitsave.append([cand_idx, new_cost, cand_type])
 
@@ -200,9 +232,10 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
             else:
                 compress_table[compress_by].append(cand_idx)
 
-        times.append(time.time())
+        process_time.append(time.time())
 
-    return C_idx, H_idx, compress_table, idx_bitsave, times
+
+    return C_idx, H_idx, compress_table, idx_bitsave, candidate_picking_time, process_time
 
 
 if __name__ == "__main__":
@@ -210,7 +243,7 @@ if __name__ == "__main__":
     from paper.MPIII.eval import get_f, f1
 
     bits = range(3, 8)
-    data = scipy.io.loadmat('eval_data/ToeSegmentation2')
+    data = scipy.io.loadmat('eval_data/Strawberry')
 
     ts = data['data']
     window_size = int(data['subLen'][0][0])
@@ -220,26 +253,27 @@ if __name__ == "__main__":
 
     t_min, t_max = discretization_pre(ts, window_size)
 
-    for b in [4]:
+    for b in [7]:
         # interval = sax_discretization_pre(ts, b, 'norm', bounded=False)
         # c, h, compress_table, idx_bitsave = sax_subsequence_selection(ts, interval, t_min, t_max, mp, mpi, window_size, 10, b)
-        c, h, compress_table, idx_bitsave = approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, b)
-        idx_bitsave = np.array(idx_bitsave)
-
-        cut_off = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
-
-        if cut_off.shape[0] == 0:
-            cut_off = idx_bitsave[:, 1].shape[0]
-        else:
-            cut_off = cut_off[0]
-
-        cut_off = np.argmin(idx_bitsave[:, 1])
-
-        valid_idx = idx_bitsave[:, 0][:cut_off]
-        precisions, recalls = get_f(valid_idx, tp, 0.2, window_size)
-
-        plt.plot(recalls, precisions)
-        plt.title('{} bits compression\n Dnorm {}'.format(b, f1(precisions, recalls)))
-        plt.ylabel('Precision')
-        plt.xlabel('Recall')
-        plt.show()
+        # c, h, compress_table, idx_bitsave, times = subsequence_selection(ts, t_min, t_max, mp, mpi, window_size, 10, b)
+        c, h, compress_table, idx_bitsave, picking_time, process_time = approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, b)
+        # idx_bitsave = np.array(idx_bitsave)
+        #
+        # cut_off = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
+        #
+        # if cut_off.shape[0] == 0:
+        #     cut_off = idx_bitsave[:, 1].shape[0]
+        # else:
+        #     cut_off = cut_off[0]
+        #
+        # cut_off = np.argmin(idx_bitsave[:, 1])
+        #
+        # valid_idx = idx_bitsave[:, 0][:cut_off]
+        # precisions, recalls = get_f(valid_idx, tp, 0.2, window_size)
+        #
+        # plt.plot(recalls, precisions)
+        # plt.title('{} bits compression\n Dnorm {}'.format(b, f1(precisions, recalls)))
+        # plt.ylabel('Precision')
+        # plt.xlabel('Recall')
+        # plt.show()

@@ -75,6 +75,7 @@ def stomp(series1, series2, window_size, self_join, distance=None):
     mp, mpi = dp.copy(), np.zeros(dp.shape[0])
 
     for i in range(1, n2 - window_size + 1):
+        print('Process: {}/{}'.format(i, n2-window_size+1))
         # for j in reversed(range(1, n2 - window_size + 1)):
         #     qt[j] = qt[j - 1] - (series1[i - 1] * series1[j - 1]) + (series1[i + window_size - 1] * series1[j + window_size - 1])
 

@@ -10,8 +10,8 @@ if __name__ == '__main__':
 
     for dataset in datasets:
         name = dataset[:-4]
-        ann_dir = 'ann_selection'
-        norm_dir = 'eval-2'
+        ann_dir = 'ann_selection08-17'
+        norm_dir = 'eval-2(dnorm, gaussian)(3-7)'
 
         exp_result[name] = {}
 
@@ -38,4 +38,4 @@ if __name__ == '__main__':
 
             exp_result[name][bit] = temp
 
-    pickle.dump(exp_result, open('result_dict08-14.pkl', 'wb'))
+    pickle.dump(exp_result, open('result_dict08-19.pkl', 'wb'))

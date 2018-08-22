@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def plot_bar(score1, score2, label1, label2, path):
-    n_groups = 4
+    n_groups = 3
 
     # means_men = (20, 35, 30, 35, 27)
     # std_men = (2, 3, 4, 1, 2)
@@ -34,7 +34,7 @@ def plot_bar(score1, score2, label1, label2, path):
     ax.set_ylabel('Scores')
     # ax.set_title('')
     ax.set_xticks(index + bar_width / 2)
-    ax.set_xticklabels(('F1 Score', 'Precision', 'Recall', 'Time'))
+    ax.set_xticklabels(('F1 Score', 'Precision', 'Recall'))
     ax.legend()
 
     fig.tight_layout()
@@ -42,7 +42,7 @@ def plot_bar(score1, score2, label1, label2, path):
     plt.close()
 
 if __name__ == '__main__':
-    result = pickle.load(open('result_dict08-14.pkl', 'rb'))
+    result = pickle.load(open('./pickles/result_dict08-19.pkl', 'rb'))
     datasets = os.listdir('../eval_data')
 
     bits_range = [3, 4, 5, 6, 7]
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         name = dataset[:-4]
 
         for bit in bits_range:
-            plot_dir = './plots08-14/{}/{}'.format(name, bit)
+            plot_dir = './plots08-19/{}/{}'.format(name, bit)
             os.makedirs(plot_dir)
 
             # f1, precision, recall
@@ -72,20 +72,16 @@ if __name__ == '__main__':
                 f1 = 0 if (precision == 0 or recall == 0) else np.around(2.0/((1.0/precision) + (1.0)/recall), decimals=3)
                 time = result[name][bit][cats[i]]['time'][0][0]
 
-                data[i] = [f1, precision, recall, time]
-
+                # data[i] = [f1, precision, recall, time]
+                data[i] = [f1, precision, recall]
             if key_error:
                 continue
 
             # scale time in (0, 1) range
             print('{} - {}'.format(name, bit))
-            print('{} - {}'.format(data[0][3], data[1][3]))
 
-            min_time = min(data[0][3], data[1][3])
-            max_time = max(data[0][3], data[1][3])
-
-            total_time = data[0][3] + data[0][1]
-            data[0][3] = float((data[0][3])/(total_time))
-            data[1][3] = float((data[1][3])/(total_time))
+            # total_time = data[0][3] + data[1][3]
+            # data[0][3] = float(data[0][3])/total_time
+            # data[1][3] = float(data[1][3])/total_time
 
             plot_bar(data[0], data[1], cats[0], cats[1], plot_dir)
