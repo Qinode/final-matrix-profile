@@ -9,15 +9,19 @@ if __name__ == '__main__':
     exp_result = {}
 
     for dataset in datasets:
+
+        if not dataset.endswith('mat'):
+            continue
+
         name = dataset[:-4]
-        ann_dir = 'ann_selection08-17'
-        norm_dir = 'eval-2(dnorm, gaussian)(3-7)'
+        ann_dir = 'ann_selection08-22'
+        norm_dir = 'result'
 
         exp_result[name] = {}
 
         for bit in bits_range:
-            norm_mat_path = '../eval_fig/{}/{}/saved-data/dnorm-{}bits.mat'.format(norm_dir, name, bit)
-            ann_mat_path = '../eval_fig/{}/{}/saved-data/dnorm-{}bits.mat'.format(ann_dir, name, bit)
+            norm_mat_path = '../eval_result/{}/{}/saved-data/dnorm-{}bits.mat'.format(norm_dir, name, bit)
+            ann_mat_path = '../eval_result/{}/{}/saved-data/dnorm-{}bits.mat'.format(ann_dir, name, bit)
 
             temp = {}
 
@@ -38,4 +42,4 @@ if __name__ == '__main__':
 
             exp_result[name][bit] = temp
 
-    pickle.dump(exp_result, open('result_dict08-19.pkl', 'wb'))
+    pickle.dump(exp_result, open('result_dict08-22.pkl', 'wb'))

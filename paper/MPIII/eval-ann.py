@@ -1,3 +1,5 @@
+import argparse
+
 import numpy as np
 import time
 import datetime
@@ -78,8 +80,8 @@ def run(dataset, data_name, save, save_path, bounded=False):
         # if save:
         #     scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
 
-        c, h, compress_table, idx_bitsave, times = approximate_subsequence_selction(data, t_min, t_max, mp, mpi, window_size, bits)
-        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, times[-1] - times[0]))
+        c, h, compress_table, idx_bitsave, picking_time, process_time = approximate_subsequence_selction(data, t_min, t_max, mp, mpi, window_size, bits)
+        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, process_time[-1] - process_time[0]))
 
         idx_bitsave = np.array(idx_bitsave)
 
@@ -95,7 +97,8 @@ def run(dataset, data_name, save, save_path, bounded=False):
             scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
                              {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table),
                               'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
-                              'process_time': times})
+                              'picking_time': picking_time,
+                              'process_time': process_time})
 
         plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
         plt.axvline(cut_off, linewidth=1, label='DNorm Cut Off', color='C0')
@@ -142,26 +145,34 @@ if __name__ == '__main__':
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--part', type=int, action='store', dest='part', default=-1)
+    args = parser.parse_args()
+
+    part = args.part
+    if part < 0:
+        raise ValueError('parameter part must be positive')
+
     path = os.path.dirname(os.path.abspath(__file__))
-    eval_path = os.path.join(path, 'eval_data')
+    eval_path = os.path.join(path, 'eval_data/eval_data-{}'.format(part))
     data = os.listdir(eval_path)
 
     sub_dirs = ['recall-precision', 'bits', 'components', 'saved-data']
 
     pool = ProcessPoolExecutor(7)
     futures =[]
-
     parmas = []
 
     for d in data:
         data_name = d[:-4]
 
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_fig/ann_selection08-17', data_name)
+        fig_path = os.path.join(path, 'eval_result/ann_selection08-22', data_name)
         # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
 
         for dir_name in sub_dirs:
-            os.makedirs(os.path.join(fig_path, dir_name))
+            if not os.path.exists(os.path.join(fig_path, dir_name)):
+                os.makedirs(os.path.join(fig_path, dir_name))
 
         parmas.append((data_path, data_name, fig_path))
 
