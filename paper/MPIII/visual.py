@@ -43,7 +43,7 @@ def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bit
             # times.append(time.time())
             continue
 
-        mpi_nn = mpi[candidate_idx[i]][0]
+        mpi_nn = int(mpi[candidate_idx[i]])
         quantized_mpi_nn = discretization(ts[mpi_nn:mpi_nn+window_size], t_min, t_max, bits)
         hypo_save = window_size * bits - rdl(quantized_mpi_nn, candidates[i], bits)
 
