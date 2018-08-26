@@ -1,1 +1,0 @@
-1. The process time recorded here is a numpy array, a[0] denotes when the alogrithm starts and a[i] denotes the timestamp of the ith pattern is added to the set. This array contains all timestamp of a pattern that is added including those result in more bit cost.
