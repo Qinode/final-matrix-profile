@@ -28,7 +28,7 @@ def aug_task(data, number, window_size):
 if __name__ == '__main__':
     import argparse
 
-    mat_file = sio.loadmat(dir_path+'/../eval_data/{}'.format(dataset))
+    mat_file = sio.loadmat(dir_path+'/../eval_data/all/{}'.format(dataset))
     window_size = int(mat_file['subLen'][0][0])
     data = mat_file['data']
     data = data[~np.isnan(data)]

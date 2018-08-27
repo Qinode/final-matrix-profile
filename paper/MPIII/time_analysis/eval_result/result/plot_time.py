@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
+    dataset = 'Wine'
     base = './Wine-{}/saved-data/dnorm{}-{}bits.mat'
 
     picking_times = []
