@@ -10,7 +10,8 @@ from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
 from src.matrix_profile.matrixprofile import stomp
 
-from paper.MPIII.visual import subsequence_selection, sax_subsequence_selection, approximate_subsequence_selction
+from paper.MPIII.visual import subsequence_selection, sax_subsequence_selection, approximate_subsequence_selction, \
+    g_approximate_subsequence_selction
 from paper.MPIII.util import *
 
 
@@ -79,9 +80,9 @@ def run(dataset, data_name, save, save_path, bounded=False):
 
         # if save:
         #     scipy.io.savemat('{}/{}-mp'.format(save_path, data_name), {'mp': mp, 'mpi': mpi})
-
-        c, h, compress_table, idx_bitsave, picking_time, process_time = approximate_subsequence_selction(data, t_min, t_max, mp, mpi, window_size, bits)
-        print('[{}] {} - {}bits DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, process_time[-1] - process_time[0]))
+        interval = sax_discretization_pre(data, bits, 'norm', bounded=False)
+        c, h, compress_table, idx_bitsave, picking_time, process_time = g_approximate_subsequence_selction(data, interval, t_min, t_max, mp, mpi, window_size, bits)
+        print('[{}] {} - {}bits G_DNorm Compression time {}.'.format(get_timestampe(), data_name, bits, process_time[-1] - process_time[0]))
 
         idx_bitsave = np.array(idx_bitsave)
 
@@ -94,14 +95,14 @@ def run(dataset, data_name, save, save_path, bounded=False):
         precisions, recalls = get_f(valid_idx, tp, p, window_size)
 
         if save:
-            scipy.io.savemat('{}/saved-data/dnorm-{}bits'.format(save_path, bits),
+            scipy.io.savemat('{}/saved-data/g_dnorm-{}bits'.format(save_path, bits),
                              {'compressible': c, 'hypothesis': h, 'compress_table': str(compress_table),
                               'idx_bitsave': idx_bitsave, 'precisions': precisions, 'recalls': recalls,
                               'picking_time': picking_time,
                               'process_time': process_time})
 
-        plt.plot(idx_bitsave[:, 1], label='DNorm', color='C0')
-        plt.axvline(cut_off, linewidth=1, label='DNorm Cut Off', color='C0')
+        plt.plot(idx_bitsave[:, 1], label='G_DNorm', color='C0')
+        plt.axvline(cut_off, linewidth=1, label='G_DNorm Cut Off', color='C0')
         plt.legend()
         plt.title('{} bits compression'.format(bits))
         plt.ylabel('Bits')
@@ -112,10 +113,10 @@ def run(dataset, data_name, save, save_path, bounded=False):
             plt.show()
         plt.clf()
 
-        plt.plot(recalls, precisions, label='DNorm', color='C0')
+        plt.plot(recalls, precisions, label='G_DNorm', color='C0')
         plt.legend()
 
-        plt.title('{} bits compression\n DNorm {}'.format(bits, f1(precisions, recalls)))
+        plt.title('{} bits compression\n G_DNorm {}'.format(bits, f1(precisions, recalls)))
         plt.ylabel('Precision')
         plt.xlabel('Recall')
         if save:
@@ -124,7 +125,7 @@ def run(dataset, data_name, save, save_path, bounded=False):
             plt.show()
         plt.clf()
 
-    plt.plot(x_axis, valid_idx_arr, label='DNorm')
+    plt.plot(x_axis, valid_idx_arr, label='G_DNorm')
     plt.legend()
     plt.title('Components vs Compression Bit')
     if save:
@@ -167,7 +168,7 @@ if __name__ == '__main__':
         data_name = d[:-4]
 
         data_path = os.path.join(eval_path, data_name)
-        fig_path = os.path.join(path, 'eval_result/ann_selection08-22', data_name)
+        fig_path = os.path.join(path, 'eval_result/ann_selection-(time)09-02', data_name)
         # fig_path = os.path.join(path, 'eval_fig/z_norm_mp', data_name)
 
         for dir_name in sub_dirs:

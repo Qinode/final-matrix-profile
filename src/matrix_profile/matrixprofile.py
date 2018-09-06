@@ -184,3 +184,47 @@ def lrstomp(series1, series2, window_size, self_join, distance=None):
 #
 #             return np.append(p, p_new), np.append(i, i_new)
 
+def slow_stomp(series1, series2, window_size, self_join, distance=None):
+
+    n2 = series2.shape[0]
+
+    mean_t = moving_average(series1, window_size)
+    std_t = moving_std(series1, mean_t, window_size)
+
+    series1_freq = np.fft.fft(np.append(series1, np.zeros(window_size, )))
+    qt = sliding_dot_product(series2[0: 0 + window_size], series1_freq, series1.shape[0])
+    qt_1 = qt.copy()
+
+    dp = distance_profile(qt, window_size, mean_t, std_t, np.mean(series2[0: 0 + window_size]), np.std(series2[0: 0 + window_size]))
+
+    if self_join:
+        left, right = max(0, 0 - window_size//2), min((0 + window_size//2) + 1, n2)
+        dp[left: right] = np.inf
+
+    mp, mpi = dp.copy(), np.zeros(dp.shape[0])
+
+    for i in range(1, n2 - window_size + 1):
+        print('Process: {}/{}'.format(i, n2-window_size+1))
+
+        for j in reversed(range(1, n2 - window_size + 1)):
+            qt[j] = qt[j - 1] - (series1[i - 1] * series1[j - 1]) + (series1[i + window_size - 1] * series1[j + window_size - 1])
+
+        # qt = np.roll(qt, 1)
+        # term1 = series1[i - 1] * np.roll(series1[: n2 - window_size + 1], 1).reshape(qt.shape)
+        # term2 = series1[i + window_size - 1] * series1[window_size - 1:].reshape(qt.shape)
+        # qt = qt - term1 + term2
+        qt[0] = qt_1[i]
+
+        if self_join:
+            dp = distance_profile(qt, window_size, mean_t, std_t, mean_t[i], std_t[i])
+            left, right = max(0, i - window_size//2), min((i + window_size//2) + 1, n2)
+            dp[left:right] = np.inf
+        else:
+            query = series2[i:i + window_size]
+            mean_q = np.mean(query)
+            std_q = np.mean(query)
+            dp = mass(qt, window_size, mean_t, std_t, mean_q, std_q)
+
+        mp, mpi = elementwise_min(mp, mpi, dp, i)
+
+    return mp, mpi

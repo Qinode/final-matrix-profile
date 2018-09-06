@@ -11,6 +11,9 @@ if __name__ == '__main__':
     table = {}
 
     for data in data_sets:
+        # if data != 'FaceFour':
+        #     continue
+
         temp_table = {}
 
         precisions = []
@@ -30,7 +33,7 @@ if __name__ == '__main__':
             cut_offs = np.where(np.diff(idx_bitsave[:, 1]) > 0)[0]
             cut_off = cut_offs[0] if cut_offs.shape[0] != 0 else idx_bitsave.shape[0]
 
-            picking_time = np.sum(file['picking_time'][:cut_off])
+            picking_time = np.sum(file['picking_time'].reshape(-1, 1)[:cut_off])
             t = file['process_time'][0]
             time = (t[cut_off] - t[0]) if len(t) != 0 else 0
 

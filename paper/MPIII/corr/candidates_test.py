@@ -34,21 +34,22 @@ def f(data_name, raw_data, saved_data, bits):
     cs = np.array(candidates[1])
     cs_hits = get_hits(cs, tp, p, window_size)
     print('{} - CS Candidates: {} TP: {}, Hit: {}'.format(data_name, cs.shape[0], tp.shape[0], cs_hits))
+    intersect_size = np.intersect1d(cs, hc).shape
+    print('Intersection Size: {}'.format(intersect_size))
 
-    return hc_hits, cs_hits
+    return data_name, tp.shape[0], hc.shape[0], cs.shape[0], hc_hits, cs_hits, intersect_size[0]
 
 
 if __name__ == '__main__':
-    datasets = os.listdir('../eval_data')
+    datasets = os.listdir('../eval_data/all')
+    header = ['data', 'tp', 'bc candidates', 'ac candidates', 'bc htis', 'ac hits', 'intersection']
     result = []
+    result.append(header)
     for ds in datasets:
         dataset = ds[:-4]
         bits = 4
-        saved_data = sio.loadmat('../eval_fig/normal-1-0/{}/saved-data/dnorm-{}bits'.format(dataset, bits))
-        raw_data = sio.loadmat('../eval_data/{}'.format(dataset))
+        saved_data = sio.loadmat('../eval_result/result/{}/saved-data/dnorm-{}bits'.format(dataset, bits))
+        raw_data = sio.loadmat('../eval_data/all/{}'.format(dataset))
 
-        hc_hits, cs_hits = f(dataset, raw_data, saved_data, bits)
-
-        ds_res = [dataset, hc_hits, cs_hits]
-        result.append(ds_res)
+        result.append(f(dataset, raw_data, saved_data, bits))
 

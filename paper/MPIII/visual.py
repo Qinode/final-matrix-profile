@@ -3,7 +3,110 @@ import time
 from paper.MPIII.util import *
 
 import numpy as np
-import matplotlib.pyplot as plt
+
+
+def g_approximate_subsequence_selction(ts, interval, t_min, t_max, mp, mpi, window_size, bits, trees=100):
+    from annoy import AnnoyIndex
+
+    candidate_picking_time = []
+    process_time = [time.time()]
+    mp, mpi = mp.copy(), mpi.copy()
+    max_patterns = ts.shape[0] // window_size
+
+    candidates, candidate_idx = sax_pick_candidates(ts, interval, t_min, t_max, window_size, mp, max_patterns)
+
+    ann_indexer = AnnoyIndex(window_size, metric='euclidean')
+
+    for i in range(len(candidate_idx)):
+        item = ts[i:i+window_size]
+        item = (item - np.mean(item))/np.std(item)
+        ann_indexer.add_item(i, item)
+        # ann_indexer.add_item(i, candidates[i])
+
+    ann_indexer.build(trees)
+
+    C, C_idx, H, H_idx = [], set(), [], set()
+    idx_bitsave = []
+    compress_table = {}
+
+    U = ts.shape[0] - window_size + 1
+    bit_cost = U * window_size * bits
+
+    for i in range(len(candidate_idx)):
+        if candidate_idx[i] in H_idx or candidate_idx[i] in C_idx:
+            continue
+
+        if len(H) == 0:
+            H.append(candidates[i])
+            H_idx.add(candidate_idx[i])
+            idx_bitsave.append([candidate_idx[i], bit_cost, 0])
+            # times.append(time.time())
+            continue
+
+        mpi_nn = int(mpi[candidate_idx[i]])
+        quantized_mpi_nn = sax_discretization(ts[mpi_nn:mpi_nn+window_size], t_min, t_max, interval)
+        hypo_save = window_size * bits - rdl(quantized_mpi_nn, candidates[i], bits)
+
+        start = time.time()
+        approximate_nn = ann_indexer.get_nns_by_item(i, 2)
+        if len(approximate_nn) == 0:
+            print('Approximate nearest neighbour not found')
+            H.append(candidates[i])
+            H_idx.add(candidate_idx[i])
+            continue
+        else:
+            ann = approximate_nn[1]
+            compress_save = window_size * bits - rdl(candidates[i], candidates[ann], bits)
+        candidate_picking_time.append(time.time() - start)
+
+        if hypo_save > compress_save:
+            H.append(candidates[i])
+            H_idx.add(candidate_idx[i])
+
+            if len(idx_bitsave) == 0:
+                idx_bitsave.append([candidate_idx[i], bit_cost, 0])
+            else:
+                previous_cost = idx_bitsave[-1][1]
+                idx_bitsave.append([candidate_idx[i], previous_cost, 0])
+
+            U -= 1
+
+            if candidate_idx[i] not in compress_table:
+                compress_table[candidate_idx[i]] = []
+
+        else:
+            C.append(candidates[i])
+            C_idx.add(candidate_idx[i])
+
+            if(candidate_idx[ann] not in H_idx):
+                H.append(candidates[ann])
+                H_idx.add(candidate_idx[ann])
+
+                if len(idx_bitsave) == 0:
+                    idx_bitsave.append([candidate_idx[ann], bit_cost, 0])
+                else:
+                    previous_cost = idx_bitsave[-1][1]
+                    idx_bitsave.append([candidate_idx[ann], previous_cost, 0])
+
+                candidate_picking_time.append(candidate_picking_time[-1])
+                U -= 1
+
+            U -= 1
+
+            new_cost = bit(C, H, U, window_size, bits)
+            bit_cost = min(bit_cost, new_cost)
+
+            idx_bitsave.append([candidate_idx[i], new_cost, 1])
+
+            if candidate_idx[ann] not in compress_table:
+                compress_table[candidate_idx[ann]] = [candidate_idx[i]]
+            else:
+                compress_table[candidate_idx[ann]].append(candidate_idx[i])
+
+        process_time.append(time.time())
+
+    return list(C_idx), list(H_idx), compress_table, idx_bitsave, candidate_picking_time, process_time
+
 
 def approximate_subsequence_selction(ts, t_min, t_max, mp, mpi, window_size, bits, trees=100):
     from annoy import AnnoyIndex
@@ -233,7 +336,6 @@ def sax_subsequence_selection(time_series, interval, t_min, t_max, mp, mpi, wind
                 compress_table[compress_by].append(cand_idx)
 
         process_time.append(time.time())
-
 
     return C_idx, H_idx, compress_table, idx_bitsave, candidate_picking_time, process_time
 
